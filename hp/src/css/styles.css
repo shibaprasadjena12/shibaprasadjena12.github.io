@@ -1,0 +1,263 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    animation: slideIn 1s ease-in-out;
+    text-align: center;
+    padding: 40px 20px;
+    background-image: url('https://images.unsplash.com/photo-1526318472351-c75fcf07093c');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    background-color: rgba(0, 0, 0, 0.6);
+    display: inline-block;
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 2.5em;
+    font-family: 'Georgia', serif;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-design {
+    font-size: 2em;
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#home .text-design {
+    background-color: #f0e68c;
+}
+
+#houses .text-design {
+    background-color: #ff6347;
+}
+
+#characters .text-design {
+    background-color: #87ceeb;
+}
+
+#spells .text-design {
+    background-color: #dda0dd;
+}
+
+#wizards-unite .text-design {
+    background-color: #ff4500;
+}
+
+svg {
+    display: block;
+    margin: 20px auto;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ccc;
+}
+
+/* Game Styles */
+#game {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#game input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#game button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#game button:hover {
+    background-color: #45a049;
+}
+
+#spell-effect {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sparkle {
+    width: 50px;
+    height: 50px;
+    background-color: gold;
+    border-radius: 50%;
+    animation: sparkle 1s infinite;
+}
+
+@keyframes sparkle {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#potion-result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: purple;
+}
+
+#chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    gap: 2px;
+    margin: 20px auto;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chess-row {
+    display: contents;
+}
+
+.chess-cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.chess-cell:hover {
+    transform: scale(1.1);
+    background-color: #ffeb3b;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+    header h1 {
+        font-size: 2em;
+        padding: 15px 30px;
+    }
+
+    section {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .text-design {
+        font-size: 1.5em;
+        padding: 15px;
+    }
+
+    svg {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    nav ul li a {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+        padding: 10px 20px;
+    }
+
+    section {
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .text-design {
+        font-size: 1.2em;
+        padding: 10px;
+    }
+
+    svg {
+        width: 60px;
+        height: 60px;
+    }
+}

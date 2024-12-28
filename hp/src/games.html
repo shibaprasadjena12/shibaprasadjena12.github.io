@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter Games</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Harry Potter Games</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#guess-the-number">Guess the Number</a></li>
+                <li><a href="#magic-wand">Magic Wand</a></li>
+                <li><a href="#potion-mixing">Potion Mixing</a></li>
+                <li><a href="chess.html">Magical Chess</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="guess-the-number">
+            <h2>Guess the Number Game</h2>
+            <p>Try your luck with this simple game. Guess a number between 1 and 100 and see if you can find the correct number!</p>
+            <div id="game">
+                <input type="number" id="guess" placeholder="Enter your guess">
+                <button onclick="checkGuess()">Guess</button>
+                <p id="result"></p>
+            </div>
+        </section>
+        <section id="magic-wand">
+            <h2>Magic Wand Game</h2>
+            <p>Cast spells with your magic wand! Click the button to cast a spell and see the magical effect.</p>
+            <div id="magic-wand-game">
+                <button onclick="castSpell()">Cast Spell</button>
+                <div id="spell-effect"></div>
+            </div>
+        </section>
+        <section id="potion-mixing">
+            <h2>Potion Mixing Game</h2>
+            <p>Mix ingredients to create magical potions! Select ingredients and click the button to mix them.</p>
+            <div id="potion-mixing-game">
+                <select id="ingredient1">
+                    <option value="unicorn hair">Unicorn Hair</option>
+                    <option value="phoenix feather">Phoenix Feather</option>
+                    <option value="dragon scale">Dragon Scale</option>
+                </select>
+                <select id="ingredient2">
+                    <option value="mandrake root">Mandrake Root</option>
+                    <option value="gillyweed">Gillyweed</option>
+                    <option value="basilisk fang">Basilisk Fang</option>
+                </select>
+                <button onclick="mixPotion()">Mix Potion</button>
+                <p id="potion-result"></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Wizarding World Fan Site</p>
+    </footer>
+    <script src="js/games.js"></script>
+</body>
+</html>
