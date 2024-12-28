@@ -160,8 +160,8 @@ footer {
 
 #chess-board {
     display: grid;
-    grid-template-columns: repeat(8, 40px);
-    grid-template-rows: repeat(8, 40px);
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
     gap: 2px;
     margin: 20px auto;
     border: 2px solid #000;
