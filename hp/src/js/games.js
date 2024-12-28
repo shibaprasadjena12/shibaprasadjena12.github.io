@@ -42,6 +42,7 @@ let selectedCell = null;
 let currentPlayer = 'white';
 let whiteKingPosition = { row: 7, col: 4 };
 let blackKingPosition = { row: 0, col: 4 };
+let enPassantTarget = null;
 
 function createChessBoard() {
     const board = document.getElementById('chess-board');
@@ -79,9 +80,9 @@ function handleCellClick(cell) {
             movePiece(selectedCell, cell);
             selectedCell = null;
             if (isInCheck()) {
-                alert(`${currentPlayer === 'white' ? 'Black' : 'White'} has check on the king!`);
+                // alert(`${currentPlayer === 'white' ? 'Black' : 'White'} has check on the king!`);
             } else if (isCheckmate()) {
-                alert(`${currentPlayer === 'white' ? 'White' : 'Black'} wins by checkmate!`);
+                // alert(`${currentPlayer === 'white' ? 'White' : 'Black'} wins by checkmate!`);
             }
         } else {
             resetSelectedCell();
@@ -106,29 +107,48 @@ function isValidMove(fromCell, toCell) {
     const toCol = parseInt(toCell.dataset.col);
     const piece = fromCell.textContent;
 
-    // Allow pawns to move forward by one square, two squares on first move, or capture diagonally
+    // Prevent capturing own pieces
+    if (toCell.textContent && isCurrentPlayerPiece(toCell)) {
+        return false;
+    }
+
+    // Pawn moves
     if (piece === '♙' && currentPlayer === 'white') {
         return (fromRow - 1 === toRow && fromCol === toCol && !toCell.textContent) ||
                (fromRow - 2 === toRow && fromCol === toCol && fromRow === 6 && !toCell.textContent && !document.querySelector(`[data-row="${fromRow - 1}"][data-col="${fromCol}"]`).textContent) ||
-               (fromRow - 1 === toRow && Math.abs(fromCol - toCol) === 1 && toCell.textContent && isOpponentPiece(toCell));
+               (fromRow - 1 === toRow && Math.abs(fromCol - toCol) === 1 && toCell.textContent && isOpponentPiece(toCell)) ||
+               (fromRow - 1 === toRow && Math.abs(fromCol - toCol) === 1 && !toCell.textContent && enPassant(fromCell, toCell));
     } else if (piece === '♟' && currentPlayer === 'black') {
         return (fromRow + 1 === toRow && fromCol === toCol && !toCell.textContent) ||
                (fromRow + 2 === toRow && fromCol === toCol && fromRow === 1 && !toCell.textContent && !document.querySelector(`[data-row="${fromRow + 1}"][data-col="${fromCol}"]`).textContent) ||
-               (fromRow + 1 === toRow && Math.abs(fromCol - toCol) === 1 && toCell.textContent && isOpponentPiece(toCell));
+               (fromRow + 1 === toRow && Math.abs(fromCol - toCol) === 1 && toCell.textContent && isOpponentPiece(toCell)) ||
+               (fromRow + 1 === toRow && Math.abs(fromCol - toCol) === 1 && !toCell.textContent && enPassant(fromCell, toCell));
     }
 
-    // Add more rules for other pieces
-    if (piece === '♖' || piece === '♜') { // Rook
+    // Rook moves
+    if (piece === '♖' || piece === '♜') {
         return (fromRow === toRow || fromCol === toCol) && isPathClear(fromCell, toCell);
-    } else if (piece === '♘' || piece === '♞') { // Knight
+    }
+
+    // Knight moves
+    if (piece === '♘' || piece === '♞') {
         return (Math.abs(fromRow - toRow) === 2 && Math.abs(fromCol - toCol) === 1) ||
                (Math.abs(fromRow - toRow) === 1 && Math.abs(fromCol - toCol) === 2);
-    } else if (piece === '♗' || piece === '♝') { // Bishop
+    }
+
+    // Bishop moves
+    if (piece === '♗' || piece === '♝') {
         return Math.abs(fromRow - toRow) === Math.abs(fromCol - toCol) && isPathClear(fromCell, toCell);
-    } else if (piece === '♕' || piece === '♛') { // Queen
+    }
+
+    // Queen moves
+    if (piece === '♕' || piece === '♛') {
         return (fromRow === toRow || fromCol === toCol || Math.abs(fromRow - toRow) === Math.abs(fromCol - toCol)) && isPathClear(fromCell, toCell);
-    } else if (piece === '♔' || piece === '♚') { // King
-        return Math.abs(fromRow - toRow) <= 1 && Math.abs(fromCol - toCol) <= 1;
+    }
+
+    // King moves
+    if (piece === '♔' || piece === '♚') {
+        return (Math.abs(fromRow - toRow) <= 1 && Math.abs(fromCol - toCol) <= 1) || castling(fromCell, toCell);
     }
 
     return false;
@@ -177,10 +197,10 @@ function movePiece(fromCell, toCell) {
         toCell.textContent = '♕'; // Promote pawn to queen
     }
     currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+    enPassantTarget = null;
 }
 
 function isInCheck() {
-    // Check if the current player's king is in check
     const kingPosition = currentPlayer === 'white' ? whiteKingPosition : blackKingPosition;
     const opponentPieces = currentPlayer === 'white' ? '♜♞♝♛♚♟' : '♖♘♗♕♔♙';
     const cells = document.querySelectorAll('.chess-cell');
@@ -193,7 +213,6 @@ function isInCheck() {
 }
 
 function isCheckmate() {
-    // Basic checkmate detection (only checks if the king can move out of check)
     const kingPosition = currentPlayer === 'white' ? whiteKingPosition : blackKingPosition;
     const kingCell = document.querySelector(`[data-row="${kingPosition.row}"][data-col="${kingPosition.col}"]`);
     const cells = document.querySelectorAll('.chess-cell');
@@ -205,6 +224,42 @@ function isCheckmate() {
         }
     }
     return true;
+}
+
+function enPassant(fromCell, toCell) {
+    // Implement en passant logic
+    const fromRow = parseInt(fromCell.dataset.row);
+    const fromCol = parseInt(fromCell.dataset.col);
+    const toRow = parseInt(toCell.dataset.row);
+    const toCol = parseInt(toCell.dataset.col);
+
+    if (enPassantTarget && enPassantTarget.row === toRow && enPassantTarget.col === toCol) {
+        const capturedPawn = document.querySelector(`[data-row="${fromRow}"][data-col="${toCol}"]`);
+        capturedPawn.textContent = '';
+        return true;
+    }
+    return false;
+}
+
+function castling(fromCell, toCell) {
+    // Implement castling logic
+    const fromRow = parseInt(fromCell.dataset.row);
+    const fromCol = parseInt(fromCell.dataset.col);
+    const toRow = parseInt(toCell.dataset.row);
+    const toCol = parseInt(toCell.dataset.col);
+
+    if (Math.abs(fromCol - toCol) === 2 && fromRow === toRow) {
+        const rookCol = toCol > fromCol ? 7 : 0;
+        const rookTargetCol = toCol > fromCol ? toCol - 1 : toCol + 1;
+        const rookCell = document.querySelector(`[data-row="${fromRow}"][data-col="${rookCol}"]`);
+        const rookTargetCell = document.querySelector(`[data-row="${fromRow}"][data-col="${rookTargetCol}"]`);
+
+        if (rookCell && rookCell.textContent.toLowerCase() === 'r' && isPathClear(fromCell, rookCell)) {
+            movePiece(rookCell, rookTargetCell);
+            return true;
+        }
+    }
+    return false;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
