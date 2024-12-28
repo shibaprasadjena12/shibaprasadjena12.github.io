@@ -160,12 +160,12 @@ footer {
 
 #chess-board {
     display: grid;
-    grid-template-columns: repeat(8, 50px);
-    grid-template-rows: repeat(8, 50px);
+    grid-template-columns: repeat(8, 40px);
+    grid-template-rows: repeat(8, 40px);
     gap: 2px;
     margin: 20px auto;
     border: 2px solid #000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(5, 221, 70, 0.2);
 }
 
 .chess-row {
