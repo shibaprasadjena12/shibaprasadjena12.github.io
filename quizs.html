@@ -97,17 +97,10 @@
                 <span class="text"> Researchs </span>
               </a>
             </li>
-              <li class="sidebar-menu__item">
+            <li class="sidebar-menu__item">
               <a href="quizs.html" class="sidebar-menu__link">
                 <span class="icon"><i class="ph ph-bookmarks"></i></span>
                 <span class="text"> Quizs </span>
-              </a>
-            </li>
-             </li>
-              <li class="sidebar-menu__item">
-              <a href="events.html" class="sidebar-menu__link">
-                <span class="icon"><i class="ph ph-bookmarks"></i></span>
-                <span class="text"> events </span>
               </a>
             </li>
 
@@ -133,7 +126,7 @@
           >
             <i class="ph ph-list"></i>
           </button>
-          <h3>Dashboard</h3>
+          <h3>Quizs</h3>
           <!-- Toggle Button End -->
         </div>
 
@@ -254,7 +247,260 @@
           <!-- Teacher Profile End -->
         </div>
       </div>
-      <div class="dashboard-body"></div>
+      <!-- Results Modal -->
+<div class="modal fade" id="resultsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold" id="resultsTitle">Quiz Results</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="resultsContent">
+        <!-- Dynamic Results -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="dashboard-body">
+        <!-- Quiz Links Page Start -->
+        <div class="container my-5">
+          <!-- Header -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h2 class="fw-bold mb-1">Quiz Links</h2>
+              <p class="text-muted">
+                Create and manage quiz links for online assessments and track
+                student participation
+              </p>
+            </div>
+            <button class="btn btn-main d-flex align-items-center gap-2">
+              <i class="bi bi-plus-circle"></i> Create Quiz
+            </button>
+          </div>
+
+          <!-- Stats Row -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                  <h3 class="fw-bold">4</h3>
+                  <p class="mb-0 text-muted">Total Quizzes</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                  <h3 class="fw-bold text-success">1</h3>
+                  <p class="mb-0 text-muted">Active</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                  <h3 class="fw-bold text-info">1</h3>
+                  <p class="mb-0 text-muted">Completed</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                  <h3 class="fw-bold text-warning">1</h3>
+                  <p class="mb-0 text-muted">Scheduled</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter Tabs -->
+          <ul class="nav nav-pills mb-4 gap-2" id="quizFilters">
+            <li class="nav-item">
+              <button class="nav-link active" data-filter="All">All</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-filter="Active">Active</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-filter="Completed">
+                Completed
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-filter="Scheduled">
+                Scheduled
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-filter="Draft">Draft</button>
+            </li>
+          </ul>
+
+          <!-- Quiz Cards Container -->
+          <div class="row" id="quizContainer"></div>
+        </div>
+
+        <script>
+// Quiz Data
+const quizzes = [
+  {
+    title: "Arrays and Linked Lists Quiz",
+    course: "Data Structures",
+    status: "Active",
+    description: "Test your understanding of basic data structures including arrays and linked lists.",
+    schedule: "Oct 20, 2024, 02:00 PM",
+    duration: "30 minutes",
+    students: 42,
+    questions: 20,
+    results: null
+  },
+  {
+    title: "SQL Fundamentals",
+    course: "Database Systems",
+    status: "Scheduled",
+    description: "Comprehensive quiz covering SQL queries, joins, and database design principles.",
+    schedule: "Oct 25, 2024, 10:30 AM",
+    duration: "45 minutes",
+    students: 38,
+    questions: 25,
+    results: null
+  },
+  {
+    title: "Sorting and Searching",
+    course: "Algorithms",
+    status: "Completed",
+    description: "Quiz on various sorting algorithms and search techniques.",
+    schedule: "Oct 15, 2024, 04:00 PM",
+    duration: "40 minutes",
+    students: 45,
+    questions: 18,
+    results: {
+      submissions: 3,
+      avgScore: "87%",
+      highScore: "94%",
+      avgTime: "36",
+      students: [
+        { name: "Alice Johnson", id: "CS2021001", completed: "Oct 15, 2024, 04:35 PM", score: "16/18", percent: "89%", time: "35min" },
+        { name: "Bob Smith", id: "CS2021002", completed: "Oct 15, 2024, 04:40 PM", score: "14/18", percent: "78%", time: "40min" },
+        { name: "Charlie Brown", id: "CS2021003", completed: "Oct 15, 2024, 04:32 PM", score: "17/18", percent: "94%", time: "32min" },
+      ]
+    }
+  },
+  {
+    title: "HTML, CSS & JavaScript Basics",
+    course: "Web Development",
+    status: "Draft",
+    description: "Foundational quiz covering front-end web development technologies.",
+    schedule: "Nov 1, 2024, 01:00 PM",
+    duration: "60 minutes",
+    students: 52,
+    questions: 30,
+    results: null
+  }
+];
+
+const statusColors = {
+  "Active": "success",
+  "Scheduled": "warning",
+  "Completed": "info",
+  "Draft": "secondary"
+};
+
+// Render Quizzes
+function renderQuizzes(filter = "All") {
+  const container = document.getElementById("quizContainer");
+  container.innerHTML = "";
+
+  const filtered = filter === "All" ? quizzes : quizzes.filter(q => q.status === filter);
+
+  if (!filtered.length) {
+    container.innerHTML = `<p class="text-muted">No quizzes found for "${filter}"</p>`;
+    return;
+  }
+
+  filtered.forEach((quiz, index) => {
+    const card = `
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-sm border-0 h-100 rounded-3">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="fw-bold mb-0">${quiz.title}</h5>
+              <span class="badge bg-${statusColors[quiz.status]}">${quiz.status}</span>
+            </div>
+            <p class="text-muted mb-1"><i class="fa-solid fa-book me-2"></i>${quiz.course}</p>
+            <p class="small text-muted mb-3">${quiz.description}</p>
+            <ul class="list-unstyled small flex-grow-1">
+              <li><i class="fa-regular fa-calendar-days me-2 text-primary"></i>${quiz.schedule}</li>
+              <li><i class="fa-regular fa-clock me-2 text-warning"></i>${quiz.duration}</li>
+              <li><i class="fa-solid fa-users me-2 text-success"></i>${quiz.students} students</li>
+              <li><i class="fa-solid fa-list-check me-2 text-info"></i>${quiz.questions} questions</li>
+            </ul>
+          </div>
+          <div class="card-footer bg-white border-0 d-flex justify-content-between">
+            <a href="#" class="btn btn-sm btn-outline-primary">
+              <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Open Quiz
+            </a>
+            ${quiz.results ? `
+              <button class="btn btn-sm btn-success" onclick="showResults(${index})">
+                <i class="fa-solid fa-chart-line me-1"></i> View Results
+              </button>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML += card;
+  });
+}
+
+// Show Results Modal
+function showResults(index) {
+  const quiz = quizzes[index];
+  if (!quiz.results) return;
+
+  document.getElementById("resultsTitle").innerText = `Quiz Results: ${quiz.title}`;
+
+  let resultsHTML = `
+    <div class="mb-3">
+      <p><strong><i class="fa-solid fa-file-alt me-2"></i>${quiz.results.submissions}</strong> Submissions</p>
+      <p><strong><i class="fa-solid fa-percent me-2"></i>${quiz.results.avgScore}</strong> Average Score</p>
+      <p><strong><i class="fa-solid fa-trophy me-2"></i>${quiz.results.highScore}</strong> Highest Score</p>
+      <p><strong><i class="fa-solid fa-clock me-2"></i>${quiz.results.avgTime} min</strong> Avg Time</p>
+    </div>
+    <h6 class="fw-bold">Individual Results</h6>
+    <ul class="list-group">
+      ${quiz.results.students.map(s => `
+        <li class="list-group-item">
+          <div class="fw-bold">${s.name}</div>
+          <div class="small text-muted">ID: ${s.id} • Completed: ${s.completed}</div>
+          <div><span class="badge bg-primary">${s.score}</span> - ${s.percent} • ${s.time}</div>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+
+  document.getElementById("resultsContent").innerHTML = resultsHTML;
+
+  const modal = new bootstrap.Modal(document.getElementById("resultsModal"));
+  modal.show();
+}
+
+// Filters
+document.querySelectorAll("#quizFilters .nav-link").forEach(btn => {
+  btn.addEventListener("click", function() {
+    document.querySelector("#quizFilters .nav-link.active").classList.remove("active");
+    this.classList.add("active");
+    renderQuizzes(this.dataset.filter);
+  });
+});
+
+// Initial
+renderQuizzes();
+</script>
+      </div>
     </div>
 
     <!-- Jquery js -->

@@ -17,7 +17,7 @@
     <!-- DataTables -->
     <link
       rel="stylesheet"
-      href="../../cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css"
+      href="assets/datatable/css/dataTables.dataTables.min.css"
     />
     <!-- full calendar -->
     <link rel="stylesheet" href="assets/css/full-calendar.css" />
@@ -97,14 +97,13 @@
                 <span class="text"> Researchs </span>
               </a>
             </li>
-              <li class="sidebar-menu__item">
+            <li class="sidebar-menu__item">
               <a href="quizs.html" class="sidebar-menu__link">
                 <span class="icon"><i class="ph ph-bookmarks"></i></span>
                 <span class="text"> Quizs </span>
               </a>
             </li>
-             </li>
-              <li class="sidebar-menu__item">
+            <li class="sidebar-menu__item">
               <a href="events.html" class="sidebar-menu__link">
                 <span class="icon"><i class="ph ph-bookmarks"></i></span>
                 <span class="text"> events </span>
@@ -133,7 +132,7 @@
           >
             <i class="ph ph-list"></i>
           </button>
-          <h3>Dashboard</h3>
+          <h3>Attendance</h3>
           <!-- Toggle Button End -->
         </div>
 
@@ -254,7 +253,94 @@
           <!-- Teacher Profile End -->
         </div>
       </div>
-      <div class="dashboard-body"></div>
+      <div class="dashboard-body">
+        <!-- Breadcrumb Section -->
+        <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
+          <div class="breadcrumb mb-24">
+            <ul class="flex-align gap-4">
+              <li>
+                <a
+                  href="index-2.html"
+                  class="text-gray-200 fw-normal text-15 hover-text-main-600"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <span class="text-gray-500 fw-normal d-flex"
+                  ><i class="ph ph-caret-right"></i
+                ></span>
+              </li>
+              <li>
+                <span class="text-main-600 fw-normal text-15">Attendance</span>
+              </li>
+            </ul>
+          </div>
+          <div class="flex-align gap-8 flex-wrap">
+            <div
+              class="position-relative text-gray-500 flex-align gap-4 text-13"
+            >
+              <span class="text-inherit">Filter by Class: </span>
+              <div
+                class="flex-align text-gray-500 text-13 border border-gray-100 rounded-4 ps-20 focus-border-main-600 bg-white"
+              >
+                <span class="text-lg"><i class="ph ph-funnel-simple"></i></span>
+                <select
+                  class="form-control ps-8 pe-20 py-16 border-0 text-inherit rounded-4 text-center"
+                  id="classFilter"
+                >
+                  <option value="All" selected>All Classes</option>
+                  <option value="10A">10A</option>
+                  <option value="10B">10B</option>
+                  <option value="10C">10C</option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="position-relative text-gray-500 flex-align gap-4 text-13"
+            >
+              <span class="text-inherit">Select Date: </span>
+              <input
+                type="date"
+                id="attendanceDate"
+                class="form-control ps-8 pe-20 py-16 border border-gray-100 rounded-4 text-center"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Attendance Data Widgets -->
+        <div class="row mb-24" id="attendanceWidgets"></div>
+
+        <!-- Attendance Table -->
+        <div class="card overflow-hidden">
+          <div class="card-body p-0 overflow-x-auto">
+            <table id="attendanceTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="fixed-width">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input border-gray-200 rounded-4"
+                        type="checkbox"
+                        id="selectAll"
+                      />
+                    </div>
+                  </th>
+                  <th class="h6 text-gray-300">Student Name</th>
+                  <th class="h6 text-gray-300">Email</th>
+                  <th class="h6 text-gray-300">Class</th>
+                  <th class="h6 text-gray-300">Total Days</th>
+                  <th class="h6 text-gray-300">Days Present</th>
+                  <th class="h6 text-gray-300">Attendance %</th>
+                  <th class="h6 text-gray-300">Status</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Jquery js -->
@@ -268,7 +354,7 @@
     <!-- file upload -->
     <script src="assets/js/plyr.js"></script>
     <!-- dataTables -->
-    <script src="../../cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="assets/datatable/js/dataTables.min.js"></script>
     <!-- full calendar -->
     <script src="assets/js/full-calendar.js"></script>
     <!-- jQuery UI -->
@@ -284,5 +370,189 @@
 
     <!-- main js -->
     <script src="assets/js/main.js"></script>
+    <script>
+      // Demo students data
+      const students = [
+        {
+          name: "Jane Cooper",
+          email: "jane@mail.com",
+          class: "10A",
+          totalDays: 20,
+          present: 18,
+        },
+        {
+          name: "Guy Hawkins",
+          email: "guy@mail.com",
+          class: "10A",
+          totalDays: 20,
+          present: 16,
+        },
+        {
+          name: "Dianne Russell",
+          email: "dianne@mail.com",
+          class: "10B",
+          totalDays: 20,
+          present: 19,
+        },
+        {
+          name: "Ronald Richards",
+          email: "ronald@mail.com",
+          class: "10B",
+          totalDays: 20,
+          present: 20,
+        },
+        {
+          name: "Jenny Wilson",
+          email: "jenny@mail.com",
+          class: "10C",
+          totalDays: 20,
+          present: 15,
+        },
+        {
+          name: "Devon Lane",
+          email: "devon@mail.com",
+          class: "10C",
+          totalDays: 20,
+          present: 17,
+        },
+      ];
+
+      // Calculate attendance % and status
+      function getAttendanceStatus(student) {
+        const percentage = Math.round(
+          (student.present / student.totalDays) * 100
+        );
+        let statusClass = "bg-warning-50 text-warning-600";
+        let statusText = "In Progress";
+        if (percentage >= 75) {
+          statusClass = "bg-success-50 text-success-600";
+          statusText = "Good";
+        } else if (percentage < 50) {
+          statusClass = "bg-danger-50 text-danger-600";
+          statusText = "Poor";
+        }
+        return { percentage, statusClass, statusText };
+      }
+
+      // Render Widgets with icons
+      function renderWidgets(data) {
+        const container = document.getElementById("attendanceWidgets");
+        const total = data.length;
+        const present = data.filter(
+          (s) => (s.present / s.totalDays) * 100 >= 75
+        ).length;
+        const absent = total - present;
+
+        container.innerHTML = `
+    <div class="col-md-4 mb-16">
+      <div class="card p-16 text-center shadow-sm rounded-16">
+        <i class="ph ph-users text-2xl text-gray-600 mb-8"></i>
+        <h6 class="fw-bold text-gray-600">Total Students</h6>
+        <h3 class="fw-bold">${total}</h3>
+      </div>
+    </div>
+    <div class="col-md-4 mb-16">
+      <div class="card p-16 text-center shadow-sm rounded-16">
+        <i class="ph ph-check-circle text-2xl text-success-600 mb-8"></i>
+        <h6 class="fw-bold text-gray-600">Present</h6>
+        <h3 class="fw-bold text-success-600">${present}</h3>
+      </div>
+    </div>
+    <div class="col-md-4 mb-16">
+      <div class="card p-16 text-center shadow-sm rounded-16">
+        <i class="ph ph-x-circle text-2xl text-danger-600 mb-8"></i>
+        <h6 class="fw-bold text-gray-600">Absent</h6>
+        <h3 class="fw-bold text-danger-600">${absent}</h3>
+      </div>
+    </div>
+  `;
+      }
+
+      // Render Table with editable checkboxes for today
+      function renderTable(filterClass = "All", selectedDate = new Date()) {
+        const tbody = document.querySelector("#attendanceTable tbody");
+        tbody.innerHTML = "";
+        const today = new Date();
+        const isToday = selectedDate.toDateString() === today.toDateString();
+
+        const filteredStudents =
+          filterClass === "All"
+            ? students
+            : students.filter((s) => s.class === filterClass);
+
+        filteredStudents.forEach((student) => {
+          const { percentage, statusClass, statusText } =
+            getAttendanceStatus(student);
+          tbody.innerHTML += `
+      <tr>
+        <td class="fixed-width">
+          <div class="form-check">
+            ${
+              isToday
+                ? `<input class="form-check-input border-gray-200 rounded-4 mark-attendance" data-email="${
+                    student.email
+                  }" type="checkbox" ${percentage >= 75 ? "checked" : ""}/> `
+                : `<input class="form-check-input border-gray-200 rounded-4" type="checkbox" disabled/>`
+            }
+          </div>
+        </td>
+        <td>
+          <div class="flex-align gap-8">
+            <img src="assets/images/thumbs/student-img1.png" alt="" class="w-40 h-40 rounded-circle"/>
+            <span class="h6 mb-0 fw-medium text-gray-300">${student.name}</span>
+          </div>
+        </td>
+        <td><span class="h6 mb-0 fw-medium text-gray-300">${
+          student.email
+        }</span></td>
+        <td><span class="h6 mb-0 fw-medium text-gray-300">${
+          student.class
+        }</span></td>
+        <td><span class="h6 mb-0 fw-medium text-gray-300">${
+          student.totalDays
+        }</span></td>
+        <td><span class="h6 mb-0 fw-medium text-gray-300">${
+          student.present
+        }</span></td>
+        <td><span class="h6 mb-0 fw-medium text-gray-300">${percentage}%</span></td>
+        <td>
+          <span class="text-13 py-2 px-8 ${statusClass} d-inline-flex align-items-center gap-8 rounded-pill">
+            <span class="w-6 h-6 rounded-circle flex-shrink-0" style="background-color: ${
+              statusClass.includes("success")
+                ? "#22c55e"
+                : statusClass.includes("danger")
+                ? "#ef4444"
+                : "#facc15"
+            }"></span>
+            ${statusText}
+          </span>
+        </td>
+      </tr>
+    `;
+        });
+
+        renderWidgets(filteredStudents);
+      }
+
+      // Filter by class
+      document.getElementById("classFilter").addEventListener("change", (e) => {
+        const selectedDate = new Date(
+          document.getElementById("attendanceDate").value || new Date()
+        );
+        renderTable(e.target.value, selectedDate);
+      });
+
+      // Date picker change
+      document
+        .getElementById("attendanceDate")
+        .addEventListener("change", (e) => {
+          const selectedDate = new Date(e.target.value);
+          const filterClass = document.getElementById("classFilter").value;
+          renderTable(filterClass, selectedDate);
+        });
+
+      // Initial render
+      renderTable();
+    </script>
   </body>
 </html>
