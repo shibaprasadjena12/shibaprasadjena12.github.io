@@ -330,11 +330,62 @@ print(next_greater_element([1, 5, 0, 3, 4, 5]))
             </div>
 
             <div class="section">
-                <h2>Related Topics</h2>
+                <h2>💡 Key Takeaways</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>Stack Principles:</h4>
+                        <ul>
+                            <li>LIFO = Last-In-First-Out (like a stack of plates)</li>
+                            <li>All insertions/deletions happen at the TOP only</li>
+                            <li>Push adds to top, Pop removes from top</li>
+                            <li>Peek shows top element without removing</li>
+                            <li>Time complexity is O(1) for all basic operations</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>Interview Tips:</h4>
+                        <ul>
+                            <li>Think of stacks when you see "undo/redo" problems</li>
+                            <li>Use stacks for DFS (Depth First Search) on graphs</li>
+                            <li>MinStack is a popular interview question - practice it!</li>
+                            <li>Always check for empty stack before popping</li>
+                            <li>Consider space-time tradeoffs (like MinStack using O(2n) space for O(1) get_min)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Practice Tips</h2>
+                <ol>
+                    <li><strong>Visualize:</strong> Draw or imagine stacks as vertical structures. Add elements on top, remove from top.</li>
+                    <li><strong>Edge Cases:</strong> Always handle empty stack cases. Test pop() on empty stack.</li>
+                    <li><strong>Alternative Implementations:</strong> Practice both array-based and linked list-based stacks.</li>
+                    <li><strong>Monotonic Stack:</strong> Study monotonic stack pattern - used in many medium/hard problems.</li>
+                    <li><strong>Common Patterns:</strong> Parentheses matching, expression evaluation, undo/redo functionality.</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📚 Real-World Applications</h2>
+                <ul>
+                    <li><strong>Browser History:</strong> Back button uses a stack of visited pages</li>
+                    <li><strong>Undo/Redo:</strong> Text editors store actions in stacks</li>
+                    <li><strong>Function Calls:</strong> CPU uses call stack for function execution</li>
+                    <li><strong>Expression Evaluation:</strong> Parsing and evaluating mathematical expressions</li>
+                    <li><strong>Backtracking:</strong> Solving puzzles like N-Queens, maze solving</li>
+                    <li><strong>Depth-First Search:</strong> Traversing trees and graphs</li>
+                    <li><strong>Compiler Design:</strong> Syntax checking and parsing</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🔗 Related Topics</h2>
                 <ul>
                     <li><a href="queues.html">Queues</a> - Similar but FIFO structure</li>
                     <li><a href="linked-lists.html">Linked Lists</a> - Alternative implementation</li>
                     <li><a href="arrays.html">Arrays</a> - Another implementation method</li>
+                    <li><a href="../algorithms/recursion.html">Recursion</a> - Uses call stack internally</li>
                 </ul>
             </div>
         </div>

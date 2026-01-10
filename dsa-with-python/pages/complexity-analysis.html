@@ -185,6 +185,115 @@ def example4(n, m):
                     <li>Space includes both input and auxiliary space</li>
                 </ul>
             </div>
+
+            <div class="section">
+                <h2>📊 Complexity Growth Visualization</h2>
+                <p><strong>Understanding growth rates with examples:</strong></p>
+                <div class="code-block">
+                    <pre><code class="language-text">Input Size (n) → Time Taken (approximate operations)
+
+n=10      n=100       n=1000      n=10,000
+─────     ────────    ────────    ──────────
+O(1):     1           1           1           1
+O(log n): 3           7           10          13
+O(n):     10          100         1,000       10,000
+O(n²):    100         10,000      1,000,000   100,000,000
+O(2ⁿ):    1,024       Huge        Impossible  Impossible
+
+Key Insight: O(2ⁿ) becomes IMPOSSIBLE at n=20-30!
+That's why exponential algorithms are only for small inputs.</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💡 How to Analyze Your Code</h2>
+                <ol>
+                    <li><strong>Identify Loops:</strong> Count nested loops. Each level of nesting multiplies the complexity.</li>
+                    <li><strong>Check Operations:</strong> Are operations inside loops O(1) or do they take time?</li>
+                    <li><strong>Recursion:</strong> For recursive code, multiply calls × depth.</li>
+                    <li><strong>Data Structures:</strong> Different operations have different complexities (e.g., list.insert() is O(n)).</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Algorithm Complexity Cheat Sheet</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>Data Structure Operations:</h4>
+                        <ul>
+                            <li><strong>Array Access:</strong> O(1)</li>
+                            <li><strong>Array Search:</strong> O(n)</li>
+                            <li><strong>Array Insert/Delete:</strong> O(n)</li>
+                            <li><strong>Hash Table Lookup:</strong> O(1) average</li>
+                            <li><strong>Binary Search Tree Search:</strong> O(log n) average</li>
+                            <li><strong>Heap Push/Pop:</strong> O(log n)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>Sorting Algorithms:</h4>
+                        <ul>
+                            <li><strong>Bubble/Selection/Insertion:</strong> O(n²)</li>
+                            <li><strong>Merge Sort:</strong> O(n log n)</li>
+                            <li><strong>Quick Sort:</strong> O(n log n) average, O(n²) worst</li>
+                            <li><strong>Heap Sort:</strong> O(n log n)</li>
+                            <li><strong>Counting Sort:</strong> O(n + k)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>❓ Common Interview Questions</h2>
+                <div class="code-block">
+                    <pre><code class="language-python"># Q1: What's the complexity of this?
+def mystery(n):
+    for i in range(n):           # O(n)
+        for j in range(n):       # O(n)
+            print(i, j)
+# Answer: O(n²) - nested loops multiply
+
+# Q2: And this?
+def mystery2(n):
+    for i in range(n):           # O(n)
+        print(i)
+    for j in range(n):           # O(n)
+        print(j)
+# Answer: O(n) - sequential loops add, then simplify
+
+# Q3: How about this recursive function?
+def factorial(n):                # Called n times
+    if n == 1:                   # O(1)
+        return 1
+    return n * factorial(n - 1)  # n times recursion
+# Answer: O(n) - n recursive calls, each does O(1) work
+
+# Q4: What about binary search?
+def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:           # Divides by 2 each time
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+# Answer: O(log n) - halves search space each iteration</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚠️ Common Mistakes</h2>
+                <ul>
+                    <li>❌ Forgetting to drop constants: O(2n) is still O(n), not O(2n)</li>
+                    <li>❌ Confusing space and time complexity</li>
+                    <li>❌ Not considering all operations inside loops</li>
+                    <li>❌ Ignoring worst-case scenario for interviews</li>
+                    <li>❌ Thinking built-in functions are O(1) when they're not (e.g., list.insert is O(n))</li>
+                    <li>❌ Analyzing time without considering space or vice versa</li>
+                </ul>
+            </div>
         </div>
     </main>
 

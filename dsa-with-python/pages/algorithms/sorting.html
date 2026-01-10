@@ -307,10 +307,125 @@ def heapify(arr, n, i):
             </div>
 
             <div class="section">
-                <h2>Related Topics</h2>
+                <h2>💡 Key Concepts</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>Stability in Sorting:</h4>
+                        <ul>
+                            <li><strong>Stable:</strong> Preserves order of equal elements (Bubble, Insertion, Merge)</li>
+                            <li><strong>Unstable:</strong> May reorder equal elements (Selection, Heap, Quick)</li>
+                            <li><strong>Example:</strong> Sorting [(2, 'a'), (1, 'b'), (2, 'c')]</li>
+                            <li>Stable result: [(1, 'b'), (2, 'a'), (2, 'c')]</li>
+                            <li>Unstable may have: [(1, 'b'), (2, 'c'), (2, 'a')]</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>In-Place Sorting:</h4>
+                        <ul>
+                            <li><strong>In-Place:</strong> Uses O(1) extra space (Bubble, Selection, Insertion, Heap, Quick)</li>
+                            <li><strong>Not In-Place:</strong> Uses O(n) extra space (Merge Sort)</li>
+                            <li>In-place sorting is preferred when memory is limited</li>
+                            <li>Merge Sort sacrifices space for guaranteed O(n log n)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Algorithm Selection Guide</h2>
+                <div class="code-block">
+                    <pre><code class="language-text">Choose Sorting Algorithm Based On:
+
+SIZE:
+├─ n < 10:      Insertion Sort (simple, efficient for tiny)
+├─ 10 < n < 100: Insertion Sort or Selection Sort
+└─ n > 100:     Merge Sort, Quick Sort, or Heap Sort
+
+CHARACTERISTICS:
+├─ Nearly sorted:    Insertion Sort O(n) best case
+├─ Reverse sorted:   Insertion Sort O(n²) worst, Quick Sort bad pivot
+├─ Many duplicates:  3-Way Quick Sort or Counting Sort
+└─ Unknown data:     Merge Sort (guaranteed O(n log n))
+
+CONSTRAINTS:
+├─ Memory limited:   Quick Sort (O(log n)) or Heap Sort (O(1))
+├─ Need stable:      Merge Sort or Tim Sort
+├─ Partially sorted: Insertion Sort
+└─ Real-time:        Avoid Quick Sort (O(n²) worst)
+
+PRACTICE:
+├─ Interviews:       Know Quick Sort & Merge Sort well
+├─ Coding:           Use built-in sorted() or .sort()
+└─ Theory:           Understand Big-O analysis</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎓 Learning Path</h2>
+                <ol>
+                    <li><strong>Start with:</strong> Bubble Sort, Selection Sort (understand basics)</li>
+                    <li><strong>Then learn:</strong> Insertion Sort (best case analysis)</li>
+                    <li><strong>Next:</strong> Merge Sort (divide-and-conquer strategy)</li>
+                    <li><strong>Finally:</strong> Quick Sort (randomization & partitioning)</li>
+                    <li><strong>Advanced:</strong> Heap Sort, Tim Sort, Counting Sort</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>⚠️ Common Mistakes</h2>
+                <ul>
+                    <li>❌ Using Bubble Sort for large datasets - O(n²) will be too slow</li>
+                    <li>❌ Not considering stability when sorting objects with multiple fields</li>
+                    <li>❌ Ignoring worst-case for Quick Sort - can be O(n²) with bad pivots</li>
+                    <li>❌ Forgetting that Merge Sort uses O(n) space</li>
+                    <li>❌ Not using built-in sort() - usually better than your implementation</li>
+                    <li>❌ Assuming all algorithms have same performance - they don't!</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📚 Real-World Applications</h2>
+                <ul>
+                    <li><strong>Databases:</strong> Indexing (B-trees, similar to Merge Sort)</li>
+                    <li><strong>Search Engines:</strong> Ranking results (custom comparators)</li>
+                    <li><strong>Graphics:</strong> Z-buffer sorting (depth sorting)</li>
+                    <li><strong>Operating Systems:</strong> Process scheduling</li>
+                    <li><strong>E-commerce:</strong> Product sorting by price/rating</li>
+                    <li><strong>Python's TimSort:</strong> Hybrid of Merge + Insertion (best of both worlds)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>💻 Built-in Python Sorting</h2>
+                <div class="code-block">
+                    <pre><code class="language-python"># Python uses TimSort - O(n log n), stable, efficient
+arr = [3, 1, 4, 1, 5, 9, 2, 6]
+
+# In-place sorting (modifies original)
+arr.sort()
+print(arr)  # [1, 1, 2, 3, 4, 5, 6, 9]
+
+# Create new sorted list (original unchanged)
+new_arr = sorted(arr)
+
+# Sort in reverse
+arr.sort(reverse=True)
+
+# Sort by key (custom comparator)
+people = [('Alice', 25), ('Bob', 20), ('Charlie', 30)]
+people.sort(key=lambda x: x[1])  # Sort by age
+
+# Sort with multiple criteria
+people.sort(key=lambda x: (x[1], x[0]))  # Age first, then name</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔗 Related Topics</h2>
                 <ul>
                     <li><a href="searching.html">Searching Algorithms</a> - Works with sorted data</li>
                     <li><a href="../complexity-analysis.html">Complexity Analysis</a> - Understand performance</li>
+                    <li><a href="../data-structures/heaps.html">Heaps</a> - Used in Heap Sort</li>
                 </ul>
             </div>
         </div>

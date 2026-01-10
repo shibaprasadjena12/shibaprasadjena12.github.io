@@ -344,25 +344,164 @@ class DoublyLinkedList:
             return True
     return False</code></pre>
                 </div>
+
+                <h3>Reverse Linked List</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def reverse_list(head):
+    """
+    Reverse a linked list.
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    prev = None
+    current = head
+    
+    while current:
+        next_temp = current.next  # Save next
+        current.next = prev       # Reverse
+        prev = current            # Move prev
+        current = next_temp       # Move current
+    
+    return prev  # New head</code></pre>
+                </div>
+
+                <h3>Merge Two Sorted Lists</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def merge_sorted_lists(l1, l2):
+    """
+    Merge two sorted linked lists.
+    Time Complexity: O(n + m)
+    Space Complexity: O(1)
+    """
+    dummy = Node(0)
+    current = dummy
+    
+    while l1 and l2:
+        if l1.data <= l2.data:
+            current.next = l1
+            l1 = l1.next
+        else:
+            current.next = l2
+            l2 = l2.next
+        current = current.next
+    
+    # Attach remaining
+    current.next = l1 if l1 else l2
+    
+    return dummy.next</code></pre>
+                </div>
+
+                <h3>Remove Nth Node From End</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def remove_nth_from_end(head, n):
+    """
+    Remove nth node from end of list.
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    # Create dummy to handle edge case (removing first node)
+    dummy = Node(0)
+    dummy.next = head
+    
+    # Find node before nth node
+    first = fast = dummy
+    
+    # Move fast pointer n+1 steps
+    for i in range(n + 1):
+        if not fast:
+            return dummy.next
+        fast = fast.next
+    
+    # Move both pointers
+    while fast:
+        first = first.next
+        fast = fast.next
+    
+    # Remove node
+    first.next = first.next.next
+    
+    return dummy.next</code></pre>
+                </div>
             </div>
 
             <div class="section">
-                <h2>When to Use Linked Lists</h2>
+                <h2>💡 Key Takeaways</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>Important Concepts:</h4>
+                        <ul>
+                            <li><strong>Dummy Node:</strong> Used to handle edge cases (removing first node)</li>
+                            <li><strong>Two Pointers:</strong> Fast/slow pointers for cycle detection, middle finding</li>
+                            <li><strong>Reversal:</strong> Keep track of prev/current/next carefully</li>
+                            <li><strong>Traversal:</strong> Always check for None to avoid null pointer errors</li>
+                            <li><strong>Memory:</strong> Extra space for pointers (2 per node)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>Common Mistakes:</h4>
+                        <ul>
+                            <li>❌ Not handling None checks → null pointer exceptions</li>
+                            <li>❌ Forgetting to save next node before modifying pointers</li>
+                            <li>❌ Not using dummy node for first node removal</li>
+                            <li>❌ Off-by-one errors in pointer movements</li>
+                            <li>❌ Creating cycles while reversing (losing references)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Two Pointer Technique Pattern</h2>
+                <div class="code-block">
+                    <pre><code class="language-python"># Two pointers are ESSENTIAL for linked list problems!
+
+# Pattern 1: Slow and Fast (Cycle Detection, Find Middle)
+slow = fast = head
+while fast and fast.next:
+    slow = slow.next
+    fast = fast.next.next  # Fast moves 2 steps
+# After loop: slow at middle, or they met in cycle
+
+# Pattern 2: Two Pointers Apart (Remove Nth)
+left = right = dummy
+for _ in range(n + 1):
+    right = right.next
+while right:
+    left = left.next
+    right = right.next
+# After loop: left.next is node to remove
+
+# Pattern 3: Merge Two Lists
+while l1 and l2:
+    if l1.data < l2.data:
+        current.next = l1
+        l1 = l1.next
+    else:
+        current.next = l2
+        l2 = l2.next
+    current = current.next</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Real-World Applications</h2>
                 <ul>
-                    <li>When frequent insertions/deletions are needed</li>
-                    <li>When size is unknown and varies</li>
-                    <li>For implementing stacks and queues</li>
-                    <li>For graph adjacency lists</li>
-                    <li>When memory is fragmented</li>
+                    <li><strong>Browser History:</strong> Back/forward buttons (doubly linked)</li>
+                    <li><strong>Undo/Redo:</strong> Text editor operations</li>
+                    <li><strong>Music Playlists:</strong> Song queue (circular linked list)</li>
+                    <li><strong>Graph Adjacency:</strong> Represent graph connections</li>
+                    <li><strong>Memory Allocation:</strong> Free memory blocks tracking</li>
+                    <li><strong>Hash Tables:</strong> Handling collisions with chaining</li>
                 </ul>
             </div>
 
             <div class="section">
-                <h2>Related Topics</h2>
+                <h2>🔗 Related Topics</h2>
                 <ul>
                     <li><a href="arrays.html">Arrays</a> - Alternative sequential structure</li>
                     <li><a href="stacks.html">Stacks</a> - Often implemented using linked lists</li>
                     <li><a href="queues.html">Queues</a> - Often implemented using linked lists</li>
+                    <li><a href="../complexity-analysis.html">Complexity Analysis</a> - Understand trade-offs</li>
                 </ul>
             </div>
         </div>

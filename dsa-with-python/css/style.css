@@ -587,10 +587,78 @@ body {
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        gap: 0;
+        padding: 1rem 0;
+        border-radius: 0;
+        box-shadow: var(--shadow);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        padding: 0.75rem 1.5rem;
+        display: block;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .dropdown {
+        width: 100%;
+    }
+
+    .dropdown-content {
+        position: static;
+        display: none;
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        gap: 0;
+        margin-top: 0;
+        border-radius: 0;
+        min-width: 100%;
+    }
+
+    .dropdown-content a {
+        border-radius: 0;
+        color: var(--white);
+        padding: 0.5rem 3rem;
+    }
+
+    .dropdown-content a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fbbf24;
+    }
+
+    .dropdown.active .dropdown-content {
+        display: flex;
     }
 
     .hamburger {
         display: flex;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(12px, 12px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
     }
 
     .hero-content h1 {
