@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>📚 DSA with Python</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html" class="active">Arrays</a>
+                        <a href="linked-lists.html">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html">Queues</a>
+                        <a href="trees.html">Trees</a>
+                        <a href="graphs.html">Graphs</a>
+                        <a href="heaps.html">Heaps</a>
+                        <a href="hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="../../index.html">Home</a> / Data Structures / Arrays
+            </div>
+
+            <div class="page-header">
+                <h1>Arrays (Lists)</h1>
+                <p>Fundamental collection data structure for storing multiple elements</p>
+            </div>
+
+            <div class="section">
+                <h2>What is an Array?</h2>
+                <p>An array is a fundamental data structure that stores a collection of elements of the same type in contiguous memory locations. In Python, arrays are typically implemented as <strong>lists</strong>, which are more flexible and can store elements of different types.</p>
+                <p>Arrays provide fast access to elements through their index position, making them one of the most widely used data structures in programming.</p>
+            </div>
+
+            <div class="section">
+                <h2>Key Characteristics</h2>
+                <ul>
+                    <li><strong>Index-based:</strong> Elements are accessed using their position (0-indexed in Python)</li>
+                    <li><strong>Contiguous memory:</strong> Elements are stored in adjacent memory locations</li>
+                    <li><strong>Fixed size:</strong> Traditional arrays have fixed size (Python lists are dynamic)</li>
+                    <li><strong>Homogeneous:</strong> Traditional arrays store same type (Python lists can store mixed types)</li>
+                    <li><strong>Random access:</strong> O(1) time to access any element</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Basic Operations</h2>
+                
+                <h3>1. Creating Arrays/Lists</h3>
+                <div class="code-block">
+                    <pre><code class="language-python"># Creating empty list
+arr = []
+arr = list()
+
+# Creating list with initial values
+arr = [1, 2, 3, 4, 5]
+
+# Creating list with mixed types
+arr = [1, "hello", 3.14, True]
+
+# List comprehension
+arr = [i for i in range(5)]  # [0, 1, 2, 3, 4]
+
+# Creating list of specific size
+arr = [0] * 5  # [0, 0, 0, 0, 0]</code></pre>
+                </div>
+
+                <h3>2. Accessing Elements</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">arr = [10, 20, 30, 40, 50]
+
+# Access by index (0-indexed)
+print(arr[0])      # Output: 10
+print(arr[2])      # Output: 30
+
+# Negative indexing
+print(arr[-1])     # Output: 50 (last element)
+print(arr[-2])     # Output: 40 (second last element)
+
+# Slicing
+print(arr[1:4])    # Output: [20, 30, 40]
+print(arr[:3])     # Output: [10, 20, 30]
+print(arr[2:])     # Output: [30, 40, 50]</code></pre>
+                </div>
+
+                <h3>3. Modifying Elements</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">arr = [1, 2, 3, 4, 5]
+
+# Update single element
+arr[0] = 10
+print(arr)  # Output: [10, 2, 3, 4, 5]
+
+# Update slice
+arr[1:3] = [20, 30]
+print(arr)  # Output: [10, 20, 30, 4, 5]</code></pre>
+                </div>
+
+                <h3>4. Adding Elements</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">arr = [1, 2, 3]
+
+# Append (add to end)
+arr.append(4)
+print(arr)  # Output: [1, 2, 3, 4]
+
+# Insert at specific position
+arr.insert(1, 10)
+print(arr)  # Output: [1, 10, 2, 3, 4]
+
+# Extend (add multiple elements)
+arr.extend([5, 6])
+print(arr)  # Output: [1, 10, 2, 3, 4, 5, 6]</code></pre>
+                </div>
+
+                <h3>5. Removing Elements</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">arr = [1, 2, 3, 4, 5]
+
+# Remove by value
+arr.remove(3)
+print(arr)  # Output: [1, 2, 4, 5]
+
+# Remove by index (pop)
+arr.pop()   # Removes last element
+print(arr)  # Output: [1, 2, 4]
+
+arr.pop(0)  # Removes first element
+print(arr)  # Output: [2, 4]
+
+# Clear entire list
+arr.clear()
+print(arr)  # Output: []</code></pre>
+                </div>
+
+                <h3>6. Searching Elements</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">arr = [10, 20, 30, 40, 50]
+
+# Find index of element
+index = arr.index(30)
+print(index)  # Output: 2
+
+# Check if element exists
+if 40 in arr:
+    print("Element found")
+
+# Count occurrences
+arr = [1, 2, 2, 3, 2, 4]
+count = arr.count(2)
+print(count)  # Output: 3</code></pre>
+                </div>
+
+                <h3>7. Sorting and Reversing</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">arr = [3, 1, 4, 1, 5, 9]
+
+# Sort (modifies original)
+arr.sort()
+print(arr)  # Output: [1, 1, 3, 4, 5, 9]
+
+# Reverse (modifies original)
+arr.reverse()
+print(arr)  # Output: [9, 5, 4, 3, 1, 1]
+
+# Sorted (returns new list)
+arr = [3, 1, 4, 1, 5]
+sorted_arr = sorted(arr)
+print(sorted_arr)  # Output: [1, 1, 3, 4, 5]
+print(arr)         # Original unchanged: [3, 1, 4, 1, 5]</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity:</h4>
+                    <p><strong>Access:</strong> O(1) - Direct access using index</p>
+                    <p><strong>Search:</strong> O(n) - Linear search through elements</p>
+                    <p><strong>Insertion:</strong> O(n) - May require shifting elements</p>
+                    <p><strong>Deletion:</strong> O(n) - May require shifting elements</p>
+                    <p><strong>Append:</strong> O(1) amortized - Adding to end</p>
+                </div>
+                <div class="complexity-box">
+                    <h4>Space Complexity:</h4>
+                    <p><strong>O(n)</strong> - Where n is the number of elements stored</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Advantages and Disadvantages</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Advantages</h4>
+                        <ul>
+                            <li>Fast random access O(1)</li>
+                            <li>Memory efficient</li>
+                            <li>Cache friendly</li>
+                            <li>Easy to use and understand</li>
+                            <li>Good for sorted data</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Disadvantages</h4>
+                        <ul>
+                            <li>Slow insertion/deletion O(n)</li>
+                            <li>Fixed size (in traditional arrays)</li>
+                            <li>Wastes memory (unused space)</li>
+                            <li>Must be contiguous in memory</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Common Problems</h2>
+                
+                <h3>Problem 1: Find Maximum Element</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def find_max(arr):
+    """
+    Find the maximum element in an array.
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    if not arr:
+        return None
+    
+    max_val = arr[0]
+    for num in arr:
+        if num > max_val:
+            max_val = num
+    return max_val
+
+# Using built-in
+max_val = max(arr)
+
+# Test
+arr = [3, 1, 4, 1, 5, 9]
+print(find_max(arr))  # Output: 9</code></pre>
+                </div>
+
+                <h3>Problem 2: Rotate Array</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def rotate_array(arr, k):
+    """
+    Rotate array k times to the right.
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    n = len(arr)
+    k = k % n  # Handle k > n
+    
+    # Reverse the entire array
+    arr.reverse()
+    # Reverse first k elements
+    arr[:k] = arr[:k][::-1]
+    # Reverse remaining elements
+    arr[k:] = arr[k:][::-1]
+    
+    return arr
+
+# Test
+arr = [1, 2, 3, 4, 5]
+print(rotate_array(arr, 2))  # Output: [4, 5, 1, 2, 3]</code></pre>
+                </div>
+
+                <h3>Problem 3: Remove Duplicates</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def remove_duplicates(arr):
+    """
+    Remove duplicates from sorted array.
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    if len(arr) <= 1:
+        return arr
+    
+    j = 0
+    for i in range(1, len(arr)):
+        if arr[i] != arr[j]:
+            j += 1
+            arr[j] = arr[i]
+    
+    return arr[:j+1]
+
+# Test
+arr = [1, 1, 2, 2, 3, 4, 4, 5]
+print(remove_duplicates(arr))  # Output: [1, 2, 3, 4, 5]</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>When to Use Arrays</h2>
+                <ul>
+                    <li>When you need fast random access to elements</li>
+                    <li>When you need to store a collection of elements</li>
+                    <li>When memory is limited (more efficient than linked lists)</li>
+                    <li>When you're working with sorted data</li>
+                    <li>As the foundation for many other data structures</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="linked-lists.html">Linked Lists</a> - Alternative sequential data structure</li>
+                    <li><a href="../algorithms/searching.html">Searching Algorithms</a> - Find elements efficiently</li>
+                    <li><a href="../algorithms/sorting.html">Sorting Algorithms</a> - Sort array elements</li>
+                    <li><a href="../complexity-analysis.html">Complexity Analysis</a> - Understand performance</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

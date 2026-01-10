@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Tables - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html">Arrays</a>
+                        <a href="linked-lists.html">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html">Queues</a>
+                        <a href="trees.html">Trees</a>
+                        <a href="graphs.html">Graphs</a>
+                        <a href="heaps.html">Heaps</a>
+                        <a href="hash-tables.html" class="active">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../../index.html">Home</a> / Data Structures / Hash Tables</div>
+            <div class="page-header">
+                <h1>Hash Tables</h1>
+                <p>Data structure for fast key-value pair lookup using hash function</p>
+            </div>
+
+            <div class="section">
+                <h2>What is a Hash Table?</h2>
+                <p>A hash table is a data structure that implements an associative array - a structure that maps keys to values using a hash function. It provides very fast average lookup time.</p>
+            </div>
+
+            <div class="section">
+                <h2>Key Concepts</h2>
+                <ul>
+                    <li><strong>Hash Function:</strong> Converts key to array index</li>
+                    <li><strong>Collision:</strong> When two keys hash to same index</li>
+                    <li><strong>Load Factor:</strong> Ratio of entries to array size</li>
+                    <li><strong>Chaining:</strong> Store collisions in linked list</li>
+                    <li><strong>Open Addressing:</strong> Find next empty slot for collision</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Python Dictionary (Built-in Hash Table)</h2>
+                <div class="code-block">
+                    <pre><code class="language-python"># Python dictionaries are hash tables
+my_dict = {}
+
+# Insert - O(1) average
+my_dict['name'] = 'Alice'
+my_dict['age'] = 25
+my_dict['city'] = 'NYC'
+
+# Access - O(1) average
+print(my_dict['name'])  # Output: Alice
+
+# Check if key exists - O(1)
+if 'age' in my_dict:
+    print(my_dict['age'])  # Output: 25
+
+# Get with default - O(1)
+print(my_dict.get('country', 'USA'))  # Output: USA
+
+# Delete - O(1)
+del my_dict['city']
+
+# Iterate
+for key, value in my_dict.items():
+    print(f"{key}: {value}")
+
+# Get all keys - O(1)
+keys = my_dict.keys()
+
+# Get all values - O(1)
+values = my_dict.values()</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Custom Hash Table Implementation</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">class HashTable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+    
+    def hash_function(self, key):
+        """Simple hash function"""
+        return hash(key) % self.size
+    
+    def insert(self, key, value):
+        """Insert key-value pair - O(1) average"""
+        hash_val = self.hash_function(key)
+        
+        # Handle collision using chaining
+        for i, (k, v) in enumerate(self.table[hash_val]):
+            if k == key:
+                self.table[hash_val][i] = (key, value)
+                return
+        
+        self.table[hash_val].append((key, value))
+    
+    def search(self, key):
+        """Search for value by key - O(1) average"""
+        hash_val = self.hash_function(key)
+        
+        for k, v in self.table[hash_val]:
+            if k == key:
+                return v
+        return None
+    
+    def delete(self, key):
+        """Delete key-value pair - O(1) average"""
+        hash_val = self.hash_function(key)
+        
+        for i, (k, v) in enumerate(self.table[hash_val]):
+            if k == key:
+                del self.table[hash_val][i]
+                return True
+        return False
+    
+    def display(self):
+        for i, bucket in enumerate(self.table):
+            if bucket:
+                print(f"Index {i}: {bucket}")</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity:</h4>
+                    <p><strong>Insert:</strong> O(1) average, O(n) worst case</p>
+                    <p><strong>Search:</strong> O(1) average, O(n) worst case</p>
+                    <p><strong>Delete:</strong> O(1) average, O(n) worst case</p>
+                </div>
+                <div class="complexity-box">
+                    <h4>Space Complexity:</h4>
+                    <p><strong>O(n)</strong> - Where n is number of key-value pairs</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Common Problems</h2>
+
+                <h3>Find Duplicate in Array</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def find_duplicate(arr):
+    """Find first duplicate using hash table"""
+    seen = set()
+    for num in arr:
+        if num in seen:
+            return num
+        seen.add(num)
+    return None</code></pre>
+                </div>
+
+                <h3>Two Sum Problem</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def two_sum(arr, target):
+    """Find two numbers that sum to target"""
+    seen = {}
+    
+    for num in arr:
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], num]
+        seen[num] = num
+    
+    return None</code></pre>
+                </div>
+
+                <h3>Group Anagrams</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def group_anagrams(words):
+    """Group anagrams together"""
+    anagram_map = {}
+    
+    for word in words:
+        sorted_word = ''.join(sorted(word))
+        
+        if sorted_word not in anagram_map:
+            anagram_map[sorted_word] = []
+        
+        anagram_map[sorted_word].append(word)
+    
+    return list(anagram_map.values())</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Applications</h2>
+                <ul>
+                    <li>Database indexing</li>
+                    <li>Caching</li>
+                    <li>Symbol tables in compilers</li>
+                    <li>Implementing sets</li>
+                    <li>De-duplication</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="arrays.html">Arrays</a> - Underlying storage</li>
+                    <li><a href="linked-lists.html">Linked Lists</a> - Used for chaining</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

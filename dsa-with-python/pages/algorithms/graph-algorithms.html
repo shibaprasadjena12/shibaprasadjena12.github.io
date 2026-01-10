@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Algorithms - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="../data-structures/arrays.html">Arrays</a>
+                        <a href="../data-structures/linked-lists.html">Linked Lists</a>
+                        <a href="../data-structures/stacks.html">Stacks</a>
+                        <a href="../data-structures/queues.html">Queues</a>
+                        <a href="../data-structures/trees.html">Trees</a>
+                        <a href="../data-structures/graphs.html">Graphs</a>
+                        <a href="../data-structures/heaps.html">Heaps</a>
+                        <a href="../data-structures/hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="sorting.html">Sorting Algorithms</a>
+                        <a href="searching.html">Searching Algorithms</a>
+                        <a href="dynamic-programming.html">Dynamic Programming</a>
+                        <a href="recursion.html">Recursion</a>
+                        <a href="graph-algorithms.html" class="active">Graph Algorithms</a>
+                        <a href="greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../../index.html">Home</a> / Algorithms / Graph Algorithms</div>
+            <div class="page-header">
+                <h1>Graph Algorithms</h1>
+                <p>Algorithms for solving graph-related problems efficiently</p>
+            </div>
+
+            <div class="section">
+                <h2>Important Algorithms</h2>
+
+                <h3>Dijkstra's Shortest Path</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">import heapq
+
+def dijkstra(graph, start):
+    """
+    Find shortest path from start to all vertices.
+    Time: O((V + E) log V)
+    """
+    distances = {vertex: float('inf') for vertex in graph}
+    distances[start] = 0
+    pq = [(0, start)]
+    
+    while pq:
+        current_distance, current_vertex = heapq.heappop(pq)
+        
+        if current_distance > distances[current_vertex]:
+            continue
+        
+        for neighbor, weight in graph[current_vertex].items():
+            new_distance = current_distance + weight
+            
+            if new_distance < distances[neighbor]:
+                distances[neighbor] = new_distance
+                heapq.heappush(pq, (new_distance, neighbor))
+    
+    return distances</code></pre>
+                </div>
+
+                <h3>Topological Sort (DFS)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def topological_sort(graph):
+    """
+    Topological ordering for directed acyclic graph.
+    Time: O(V + E)
+    """
+    visited = set()
+    stack = []
+    
+    def dfs(vertex):
+        visited.add(vertex)
+        
+        for neighbor in graph.get(vertex, []):
+            if neighbor not in visited:
+                dfs(neighbor)
+        
+        stack.append(vertex)
+    
+    for vertex in graph:
+        if vertex not in visited:
+            dfs(vertex)
+    
+    return stack[::-1]</code></pre>
+                </div>
+
+                <h3>Kruskal's Minimum Spanning Tree</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+    
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False
+        
+        if self.rank[px] < self.rank[py]:
+            self.parent[px] = py
+        elif self.rank[px] > self.rank[py]:
+            self.parent[py] = px
+        else:
+            self.parent[py] = px
+            self.rank[px] += 1
+        
+        return True
+
+def kruskal(n, edges):
+    """
+    Find minimum spanning tree using Kruskal's algorithm.
+    Time: O(E log E)
+    """
+    edges.sort(key=lambda x: x[2])
+    uf = UnionFind(n)
+    mst = []
+    total_cost = 0
+    
+    for u, v, weight in edges:
+        if uf.union(u, v):
+            mst.append((u, v, weight))
+            total_cost += weight
+    
+    return mst, total_cost</code></pre>
+                </div>
+
+                <h3>Floyd-Warshall All Pairs Shortest Path</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def floyd_warshall(graph):
+    """
+    Find shortest paths between all pairs.
+    Time: O(V³)
+    """
+    n = len(graph)
+    dist = [row[:] for row in graph]
+    
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                dist[i][j] = min(dist[i][j], 
+                                 dist[i][k] + dist[k][j])
+    
+    return dist</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Algorithm Comparison</h2>
+                <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <tr style="background-color: #f3f4f6;">
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>Algorithm</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>Use Case</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>Time</strong></th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">DFS</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Connected components, cycles</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(V+E)</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">BFS</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Shortest path (unweighted)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(V+E)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Dijkstra</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Shortest path (weighted)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O((V+E)logV)</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Kruskal</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Minimum spanning tree</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(ElogE)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="../data-structures/graphs.html">Graphs</a> - Data structure for graphs</li>
+                    <li><a href="greedy.html">Greedy Algorithms</a> - Kruskal uses greedy approach</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

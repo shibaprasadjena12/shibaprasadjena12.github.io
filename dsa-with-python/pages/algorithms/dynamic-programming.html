@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Programming - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="../data-structures/arrays.html">Arrays</a>
+                        <a href="../data-structures/linked-lists.html">Linked Lists</a>
+                        <a href="../data-structures/stacks.html">Stacks</a>
+                        <a href="../data-structures/queues.html">Queues</a>
+                        <a href="../data-structures/trees.html">Trees</a>
+                        <a href="../data-structures/graphs.html">Graphs</a>
+                        <a href="../data-structures/heaps.html">Heaps</a>
+                        <a href="../data-structures/hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="sorting.html">Sorting Algorithms</a>
+                        <a href="searching.html">Searching Algorithms</a>
+                        <a href="dynamic-programming.html" class="active">Dynamic Programming</a>
+                        <a href="recursion.html">Recursion</a>
+                        <a href="graph-algorithms.html">Graph Algorithms</a>
+                        <a href="greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../../index.html">Home</a> / Algorithms / Dynamic Programming</div>
+            <div class="page-header">
+                <h1>Dynamic Programming</h1>
+                <p>Solve complex problems by breaking them into simpler overlapping subproblems</p>
+            </div>
+
+            <div class="section">
+                <h2>What is Dynamic Programming?</h2>
+                <p>Dynamic Programming (DP) is an optimization technique that solves complex problems by breaking them down into simpler overlapping subproblems and storing their solutions to avoid recomputation. It uses memoization or tabulation.</p>
+            </div>
+
+            <div class="section">
+                <h2>Key Principles</h2>
+                <ul>
+                    <li><strong>Optimal Substructure:</strong> Problem solution uses solutions of subproblems</li>
+                    <li><strong>Overlapping Subproblems:</strong> Same subproblems occur multiple times</li>
+                    <li><strong>Memoization:</strong> Store computed results to avoid recalculation</li>
+                    <li><strong>Tabulation:</strong> Build solution bottom-up using a table</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Classic Problems</h2>
+
+                <h3>1. Fibonacci Number</h3>
+                <div class="code-block">
+                    <pre><code class="language-python"># Naive Recursion - O(2^n) - SLOW
+def fib_naive(n):
+    if n <= 1:
+        return n
+    return fib_naive(n-1) + fib_naive(n-2)
+
+# Memoization - O(n)
+def fib_memo(n, memo={}):
+    if n in memo:
+        return memo[n]
+    
+    if n <= 1:
+        return n
+    
+    memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]
+
+# Tabulation - O(n)
+def fib_tab(n):
+    if n <= 1:
+        return n
+    
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    
+    return dp[n]
+
+# Space optimized - O(1)
+def fib_optimized(n):
+    if n <= 1:
+        return n
+    
+    prev, curr = 0, 1
+    for _ in range(2, n + 1):
+        prev, curr = curr, prev + curr
+    
+    return curr</code></pre>
+                </div>
+
+                <h3>2. Longest Common Subsequence</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def lcs(text1, text2):
+    """
+    Find longest common subsequence.
+    Time: O(m*n) | Space: O(m*n)
+    """
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    
+    return dp[m][n]
+
+# Test
+print(lcs("abcde", "ace"))  # Output: 3</code></pre>
+                </div>
+
+                <h3>3. 0/1 Knapsack Problem</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def knapsack(weights, values, capacity):
+    """
+    0/1 Knapsack: Select items to maximize value.
+    Time: O(n*W) | Space: O(n*W)
+    """
+    n = len(weights)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            if weights[i-1] <= w:
+                dp[i][w] = max(
+                    values[i-1] + dp[i-1][w - weights[i-1]],
+                    dp[i-1][w]
+                )
+            else:
+                dp[i][w] = dp[i-1][w]
+    
+    return dp[n][capacity]
+
+# Test
+weights = [2, 3, 4, 5]
+values = [3, 4, 5, 6]
+capacity = 5
+print(knapsack(weights, values, capacity))  # Output: 10</code></pre>
+                </div>
+
+                <h3>4. Coin Change Problem</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def coin_change(coins, amount):
+    """
+    Minimum coins needed to make amount.
+    Time: O(amount * len(coins))
+    """
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    
+    for coin in coins:
+        for i in range(coin, amount + 1):
+            dp[i] = min(dp[i], dp[i - coin] + 1)
+    
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+# Test
+print(coin_change([1, 2, 5], 5))  # Output: 1 (one coin of value 5)</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Memoization vs Tabulation</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Memoization (Top-Down)</h4>
+                        <ul>
+                            <li>Intuitive, like recursion</li>
+                            <li>Only computes needed states</li>
+                            <li>Easier to understand</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Tabulation (Bottom-Up)</h4>
+                        <ul>
+                            <li>Iterative approach</li>
+                            <li>Better space optimization</li>
+                            <li>Avoids recursion overhead</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="recursion.html">Recursion</a> - Foundation of DP</li>
+                    <li><a href="greedy.html">Greedy Algorithms</a> - Alternative approach</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

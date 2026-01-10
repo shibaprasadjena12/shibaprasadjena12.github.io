@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html">Arrays</a>
+                        <a href="linked-lists.html">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html">Queues</a>
+                        <a href="trees.html">Trees</a>
+                        <a href="graphs.html" class="active">Graphs</a>
+                        <a href="heaps.html">Heaps</a>
+                        <a href="hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../../index.html">Home</a> / Data Structures / Graphs</div>
+            <div class="page-header">
+                <h1>Graphs</h1>
+                <p>Non-linear data structure representing connections between entities</p>
+            </div>
+
+            <div class="section">
+                <h2>What is a Graph?</h2>
+                <p>A graph is a non-linear data structure consisting of vertices (nodes) and edges (connections). It's used to represent networks, social connections, roads, and many real-world relationships.</p>
+            </div>
+
+            <div class="section">
+                <h2>Graph Terminology</h2>
+                <ul>
+                    <li><strong>Vertex (Node):</strong> A point in the graph</li>
+                    <li><strong>Edge:</strong> Connection between two vertices</li>
+                    <li><strong>Weighted Graph:</strong> Edges have associated weights/costs</li>
+                    <li><strong>Directed Graph:</strong> Edges have direction</li>
+                    <li><strong>Undirected Graph:</strong> Edges have no direction</li>
+                    <li><strong>Cycle:</strong> Path that returns to starting vertex</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Graph Representations</h2>
+
+                <h3>Adjacency List (Most Common)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python"># Graph as adjacency list (dictionary)
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D'],
+    'D': ['B', 'C', 'E'],
+    'E': ['D']
+}</code></pre>
+                </div>
+
+                <h3>Adjacency Matrix</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">import numpy as np
+
+# Graph as adjacency matrix
+# 0 means no edge, 1 means edge exists
+adj_matrix = [
+    [0, 1, 1, 0, 0],  # A
+    [1, 0, 0, 1, 0],  # B
+    [1, 0, 0, 1, 0],  # C
+    [0, 1, 1, 0, 1],  # D
+    [0, 0, 0, 1, 0]   # E
+]</code></pre>
+                </div>
+
+                <h3>Graph Class</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class Graph:
+    def __init__(self):
+        self.graph = {}
+    
+    def add_vertex(self, vertex):
+        if vertex not in self.graph:
+            self.graph[vertex] = []
+    
+    def add_edge(self, u, v, directed=False):
+        self.add_vertex(u)
+        self.add_vertex(v)
+        
+        self.graph[u].append(v)
+        if not directed:
+            self.graph[v].append(u)
+    
+    def display(self):
+        for vertex, neighbors in self.graph.items():
+            print(f"{vertex}: {neighbors}")</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Graph Traversal</h2>
+
+                <h3>Depth-First Search (DFS)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def dfs(graph, start, visited=None):
+    """DFS using recursion"""
+    if visited is None:
+        visited = set()
+    
+    visited.add(start)
+    print(start, end=" ")
+    
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+# Iterative DFS using stack
+def dfs_iterative(graph, start):
+    visited = set()
+    stack = [start]
+    
+    while stack:
+        vertex = stack.pop()
+        if vertex not in visited:
+            visited.add(vertex)
+            print(vertex, end=" ")
+            stack.extend(reversed(graph[vertex]))</code></pre>
+                </div>
+
+                <h3>Breadth-First Search (BFS)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">from collections import deque
+
+def bfs(graph, start):
+    """BFS using queue"""
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=" ")
+        
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity:</h4>
+                    <p><strong>DFS:</strong> O(V + E) - Visit all vertices and edges</p>
+                    <p><strong>BFS:</strong> O(V + E) - Visit all vertices and edges</p>
+                    <p><strong>Add Edge:</strong> O(1)</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Applications</h2>
+                <ul>
+                    <li>Social networks</li>
+                    <li>Path finding and routing</li>
+                    <li>Recommendation systems</li>
+                    <li>Network analysis</li>
+                    <li>Game development</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="../algorithms/graph-algorithms.html">Graph Algorithms</a> - DFS, BFS, Dijkstra</li>
+                    <li><a href="trees.html">Trees</a> - Special case of graphs</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heaps - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html">Arrays</a>
+                        <a href="linked-lists.html">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html">Queues</a>
+                        <a href="trees.html">Trees</a>
+                        <a href="graphs.html">Graphs</a>
+                        <a href="heaps.html" class="active">Heaps</a>
+                        <a href="hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../../index.html">Home</a> / Data Structures / Heaps</div>
+            <div class="page-header">
+                <h1>Heaps</h1>
+                <p>Complete binary tree with heap property for efficient priority operations</p>
+            </div>
+
+            <div class="section">
+                <h2>What is a Heap?</h2>
+                <p>A heap is a complete binary tree that satisfies the heap property. It's used to efficiently get the maximum or minimum element. There are two types: Max Heap and Min Heap.</p>
+            </div>
+
+            <div class="section">
+                <h2>Types of Heaps</h2>
+                <ul>
+                    <li><strong>Max Heap:</strong> Parent >= children (largest at root)</li>
+                    <li><strong>Min Heap:</strong> Parent <= children (smallest at root)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Heap Operations</h2>
+
+                <h3>Using Python's heapq (Min Heap)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">import heapq
+
+# Create min heap
+heap = []
+heapq.heappush(heap, 5)   # O(log n)
+heapq.heappush(heap, 3)
+heapq.heappush(heap, 7)
+heapq.heappush(heap, 1)
+
+print(heap)  # [1, 3, 7, 5]
+
+# Pop minimum element
+min_val = heapq.heappop(heap)  # O(log n)
+print(min_val)  # 1
+
+# Convert list to heap
+arr = [5, 3, 7, 1, 9]
+heapq.heapify(arr)  # O(n)
+print(arr)  # [1, 3, 7, 5, 9]
+
+# Get minimum without removing
+print(arr[0])  # 1
+
+# Max heap (negate values)
+max_heap = []
+heapq.heappush(max_heap, -5)
+heapq.heappush(max_heap, -3)
+print(-heapq.heappop(max_heap))  # 5</code></pre>
+                </div>
+
+                <h3>Custom Heap Implementation</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class MinHeap:
+    def __init__(self):
+        self.heap = []
+    
+    def parent(self, i):
+        return (i - 1) // 2
+    
+    def left_child(self, i):
+        return 2 * i + 1
+    
+    def right_child(self, i):
+        return 2 * i + 2
+    
+    def push(self, val):
+        self.heap.append(val)
+        self._bubble_up(len(self.heap) - 1)
+    
+    def _bubble_up(self, i):
+        while i > 0 and self.heap[i] < self.heap[self.parent(i)]:
+            self.heap[i], self.heap[self.parent(i)] = \
+                self.heap[self.parent(i)], self.heap[i]
+            i = self.parent(i)
+    
+    def pop(self):
+        if not self.heap:
+            return None
+        
+        min_val = self.heap[0]
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
+        
+        if self.heap:
+            self._bubble_down(0)
+        
+        return min_val
+    
+    def _bubble_down(self, i):
+        while True:
+            smallest = i
+            left = self.left_child(i)
+            right = self.right_child(i)
+            
+            if left < len(self.heap) and self.heap[left] < self.heap[smallest]:
+                smallest = left
+            
+            if right < len(self.heap) and self.heap[right] < self.heap[smallest]:
+                smallest = right
+            
+            if smallest != i:
+                self.heap[i], self.heap[smallest] = \
+                    self.heap[smallest], self.heap[i]
+                i = smallest
+            else:
+                break</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity:</h4>
+                    <p><strong>Push:</strong> O(log n)</p>
+                    <p><strong>Pop:</strong> O(log n)</p>
+                    <p><strong>Peek:</strong> O(1)</p>
+                    <p><strong>Heapify:</strong> O(n)</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Applications</h2>
+                <ul>
+                    <li>Priority queues</li>
+                    <li>Heap sort algorithm</li>
+                    <li>Dijkstra's shortest path</li>
+                    <li>Huffman coding</li>
+                    <li>Median finding</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="trees.html">Trees</a> - Heap is a complete binary tree</li>
+                    <li><a href="queues.html">Queues</a> - Priority queue uses heaps</li>
+                    <li><a href="../algorithms/sorting.html">Sorting Algorithms</a> - Heap sort</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

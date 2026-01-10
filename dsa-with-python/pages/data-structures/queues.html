@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queues - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>📚 DSA with Python</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html">Arrays</a>
+                        <a href="linked-lists.html">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html" class="active">Queues</a>
+                        <a href="trees.html">Trees</a>
+                        <a href="graphs.html">Graphs</a>
+                        <a href="heaps.html">Heaps</a>
+                        <a href="hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="../../index.html">Home</a> / Data Structures / Queues
+            </div>
+
+            <div class="page-header">
+                <h1>Queues</h1>
+                <p>FIFO (First-In-First-Out) data structure for managing elements</p>
+            </div>
+
+            <div class="section">
+                <h2>What is a Queue?</h2>
+                <p>A queue is a linear data structure that follows the <strong>First-In-First-Out (FIFO)</strong> principle. Elements are added at the rear (enqueue) and removed from the front (dequeue). Think of a queue at a bank - the first person to join is the first to be served.</p>
+            </div>
+
+            <div class="section">
+                <h2>Key Concepts</h2>
+                <ul>
+                    <li><strong>Enqueue:</strong> Add an element to the rear</li>
+                    <li><strong>Dequeue:</strong> Remove and return the front element</li>
+                    <li><strong>Front:</strong> The first element in the queue</li>
+                    <li><strong>Rear:</strong> The last element in the queue</li>
+                    <li><strong>FIFO:</strong> First element added is first to be removed</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Types of Queues</h2>
+                <ul>
+                    <li><strong>Simple Queue:</strong> Standard FIFO implementation</li>
+                    <li><strong>Circular Queue:</strong> Rear connects to front (efficient space usage)</li>
+                    <li><strong>Priority Queue:</strong> Elements served based on priority</li>
+                    <li><strong>Double-Ended Queue (Deque):</strong> Operations at both ends</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Queue Implementation</h2>
+
+                <h3>Using Python List</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class Queue:
+    def __init__(self):
+        self.items = []
+    
+    # Enqueue - O(1)
+    def enqueue(self, data):
+        self.items.append(data)
+    
+    # Dequeue - O(n) for list, O(1) for deque
+    def dequeue(self):
+        if not self.is_empty():
+            return self.items.pop(0)
+        return None
+    
+    # Get front element - O(1)
+    def front(self):
+        if not self.is_empty():
+            return self.items[0]
+        return None
+    
+    # Get rear element - O(1)
+    def rear(self):
+        if not self.is_empty():
+            return self.items[-1]
+        return None
+    
+    # Check if empty - O(1)
+    def is_empty(self):
+        return len(self.items) == 0
+    
+    # Get size - O(1)
+    def size(self):
+        return len(self.items)
+    
+    # Display queue
+    def display(self):
+        print(self.items)</code></pre>
+                </div>
+
+                <h3>Using Collections.deque (Efficient)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">from collections import deque
+
+class EfficientQueue:
+    def __init__(self):
+        self.items = deque()
+    
+    def enqueue(self, data):
+        self.items.append(data)  # O(1)
+    
+    def dequeue(self):
+        if not self.is_empty():
+            return self.items.popleft()  # O(1)
+        return None
+    
+    def front(self):
+        if not self.is_empty():
+            return self.items[0]
+        return None
+    
+    def is_empty(self):
+        return len(self.items) == 0
+    
+    def size(self):
+        return len(self.items)</code></pre>
+                </div>
+
+                <h3>Usage Example</h3>
+                <div class="code-block">
+                    <pre><code class="language-python"># Create queue
+queue = EfficientQueue()
+
+# Enqueue elements
+queue.enqueue(10)
+queue.enqueue(20)
+queue.enqueue(30)
+queue.enqueue(40)
+
+# Display
+print(queue.items)  # Output: deque([10, 20, 30, 40])
+
+# Get front
+print(queue.front())  # Output: 10
+
+# Dequeue
+print(queue.dequeue())  # Output: 10
+print(queue.dequeue())  # Output: 20
+
+# Check size
+print(queue.size())  # Output: 2</code></pre>
+                </div>
+
+                <h3>Circular Queue</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class CircularQueue:
+    def __init__(self, max_size):
+        self.max_size = max_size
+        self.items = [None] * max_size
+        self.front_idx = -1
+        self.rear_idx = -1
+    
+    def enqueue(self, data):
+        if self.is_full():
+            print("Queue is full!")
+            return
+        
+        if self.front_idx == -1:
+            self.front_idx = 0
+        
+        self.rear_idx = (self.rear_idx + 1) % self.max_size
+        self.items[self.rear_idx] = data
+    
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        
+        data = self.items[self.front_idx]
+        
+        if self.front_idx == self.rear_idx:
+            self.front_idx = self.rear_idx = -1
+        else:
+            self.front_idx = (self.front_idx + 1) % self.max_size
+        
+        return data
+    
+    def is_empty(self):
+        return self.front_idx == -1
+    
+    def is_full(self):
+        return (self.rear_idx + 1) % self.max_size == self.front_idx</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity (deque):</h4>
+                    <p><strong>Enqueue:</strong> O(1) - Add to rear</p>
+                    <p><strong>Dequeue:</strong> O(1) - Remove from front</p>
+                    <p><strong>Front/Rear:</strong> O(1) - View element</p>
+                    <p><strong>Search:</strong> O(n) - May check all elements</p>
+                </div>
+                <div class="complexity-box">
+                    <h4>Space Complexity:</h4>
+                    <p><strong>O(n)</strong> - Where n is number of elements</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Applications</h2>
+                <ul>
+                    <li><strong>CPU Scheduling:</strong> Process scheduling in operating systems</li>
+                    <li><strong>Printer Queue:</strong> Managing print jobs</li>
+                    <li><strong>BFS:</strong> Breadth-first search in graphs</li>
+                    <li><strong>Level-order Traversal:</strong> Tree traversal</li>
+                    <li><strong>Message Queue:</strong> Asynchronous message processing</li>
+                    <li><strong>Load Balancing:</strong> Distributing tasks evenly</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Common Problems</h2>
+
+                <h3>1. Implement Queue Using Stacks</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class QueueUsingStacks:
+    def __init__(self):
+        self.stack1 = []  # For enqueue
+        self.stack2 = []  # For dequeue
+    
+    def enqueue(self, data):
+        self.stack1.append(data)  # O(1)
+    
+    def dequeue(self):
+        if not self.stack2:
+            if not self.stack1:
+                return None
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        
+        return self.stack2.pop() if self.stack2 else None  # O(1) amortized</code></pre>
+                </div>
+
+                <h3>2. Implement Priority Queue</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">import heapq
+
+class PriorityQueue:
+    def __init__(self):
+        self.items = []
+    
+    # Enqueue with priority (lower = higher priority)
+    def enqueue(self, data, priority):
+        heapq.heappush(self.items, (priority, data))
+    
+    # Dequeue highest priority element
+    def dequeue(self):
+        if not self.is_empty():
+            return heapq.heappop(self.items)[1]
+        return None
+    
+    def is_empty(self):
+        return len(self.items) == 0
+    
+    def size(self):
+        return len(self.items)</code></pre>
+                </div>
+
+                <h3>3. Implement Deque (Double-Ended Queue)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class Deque:
+    def __init__(self):
+        self.items = deque()
+    
+    def add_front(self, data):
+        self.items.appendleft(data)
+    
+    def add_rear(self, data):
+        self.items.append(data)
+    
+    def remove_front(self):
+        if not self.is_empty():
+            return self.items.popleft()
+        return None
+    
+    def remove_rear(self):
+        if not self.is_empty():
+            return self.items.pop()
+        return None
+    
+    def is_empty(self):
+        return len(self.items) == 0</code></pre>
+                </div>
+
+                <h3>4. Sliding Window Maximum</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def sliding_window_maximum(arr, k):
+    """
+    Find maximum for each sliding window of size k.
+    Time Complexity: O(n)
+    Space Complexity: O(k)
+    """
+    from collections import deque
+    
+    dq = deque()  # Store indices
+    result = []
+    
+    for i in range(len(arr)):
+        # Remove elements outside current window
+        if dq and dq[0] < i - k + 1:
+            dq.popleft()
+        
+        # Remove smaller elements
+        while dq and arr[dq[-1]] < arr[i]:
+            dq.pop()
+        
+        dq.append(i)
+        
+        # Add to result
+        if i >= k - 1:
+            result.append(arr[dq[0]])
+    
+    return result
+
+# Test
+print(sliding_window_maximum([1, 3, 1, 2, 0, 5], 3))
+# Output: [3, 3, 2, 5]</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Advantages and Disadvantages</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Advantages</h4>
+                        <ul>
+                            <li>O(1) enqueue/dequeue with deque</li>
+                            <li>Simple and intuitive</li>
+                            <li>Useful for many real-world problems</li>
+                            <li>Maintains order of processing</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Disadvantages</h4>
+                        <ul>
+                            <li>Limited access pattern (FIFO)</li>
+                            <li>Cannot access middle elements</li>
+                            <li>O(n) dequeue with simple list</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="stacks.html">Stacks</a> - Opposite order (LIFO)</li>
+                    <li><a href="linked-lists.html">Linked Lists</a> - Alternative implementation</li>
+                    <li><a href="../algorithms/graph-algorithms.html">Graph Algorithms</a> - BFS uses queues</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

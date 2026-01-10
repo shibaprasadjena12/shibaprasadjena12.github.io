@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trees - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>📚 DSA with Python</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html">Arrays</a>
+                        <a href="linked-lists.html">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html">Queues</a>
+                        <a href="trees.html" class="active">Trees</a>
+                        <a href="graphs.html">Graphs</a>
+                        <a href="heaps.html">Heaps</a>
+                        <a href="hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="../../index.html">Home</a> / Data Structures / Trees
+            </div>
+
+            <div class="page-header">
+                <h1>Trees</h1>
+                <p>Hierarchical data structure with parent-child relationships</p>
+            </div>
+
+            <div class="section">
+                <h2>What is a Tree?</h2>
+                <p>A tree is a hierarchical data structure consisting of nodes connected by edges. It has a root node at the top and branches down. Trees are used to represent hierarchical relationships and are fundamental to many algorithms.</p>
+            </div>
+
+            <div class="section">
+                <h2>Types of Trees</h2>
+                <ul>
+                    <li><strong>Binary Tree:</strong> Each node has at most 2 children</li>
+                    <li><strong>Binary Search Tree (BST):</strong> Ordered binary tree for efficient searching</li>
+                    <li><strong>Balanced Trees:</strong> AVL trees, Red-Black trees for O(log n) operations</li>
+                    <li><strong>N-ary Trees:</strong> Each node can have n children</li>
+                    <li><strong>Trie:</strong> Specialized tree for string searches</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Binary Tree Implementation</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">class TreeNode:
+    def __init__(self, val=0):
+        self.val = val
+        self.left = None
+        self.right = None
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+    
+    # Inorder traversal: Left, Root, Right (sorted for BST)
+    def inorder(self, node):
+        if node:
+            self.inorder(node.left)
+            print(node.val, end=" ")
+            self.inorder(node.right)
+    
+    # Preorder traversal: Root, Left, Right
+    def preorder(self, node):
+        if node:
+            print(node.val, end=" ")
+            self.preorder(node.left)
+            self.preorder(node.right)
+    
+    # Postorder traversal: Left, Right, Root
+    def postorder(self, node):
+        if node:
+            self.postorder(node.left)
+            self.postorder(node.right)
+            print(node.val, end=" ")
+    
+    # Level-order traversal (BFS)
+    def level_order(self, node):
+        if not node:
+            return
+        from collections import deque
+        queue = deque([node])
+        while queue:
+            current = queue.popleft()
+            print(current.val, end=" ")
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Binary Search Tree (BST)</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">class BST:
+    def __init__(self):
+        self.root = None
+    
+    # Insert element - O(log n) average, O(n) worst
+    def insert(self, val):
+        if not self.root:
+            self.root = TreeNode(val)
+        else:
+            self._insert_recursive(self.root, val)
+    
+    def _insert_recursive(self, node, val):
+        if val < node.val:
+            if node.left:
+                self._insert_recursive(node.left, val)
+            else:
+                node.left = TreeNode(val)
+        else:
+            if node.right:
+                self._insert_recursive(node.right, val)
+            else:
+                node.right = TreeNode(val)
+    
+    # Search element - O(log n) average, O(n) worst
+    def search(self, val):
+        return self._search_recursive(self.root, val)
+    
+    def _search_recursive(self, node, val):
+        if not node:
+            return False
+        
+        if val == node.val:
+            return True
+        elif val < node.val:
+            return self._search_recursive(node.left, val)
+        else:
+            return self._search_recursive(node.right, val)
+    
+    # Find minimum element
+    def find_min(self, node=None):
+        if node is None:
+            node = self.root
+        
+        while node.left:
+            node = node.left
+        return node.val
+    
+    # Find maximum element
+    def find_max(self, node=None):
+        if node is None:
+            node = self.root
+        
+        while node.right:
+            node = node.right
+        return node.val</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity (Balanced BST):</h4>
+                    <p><strong>Search:</strong> O(log n) - Average case</p>
+                    <p><strong>Insert:</strong> O(log n) - Average case</p>
+                    <p><strong>Delete:</strong> O(log n) - Average case</p>
+                    <p><strong>Traversal:</strong> O(n) - Visit all nodes</p>
+                </div>
+                <div class="complexity-box">
+                    <h4>Space Complexity:</h4>
+                    <p><strong>O(n)</strong> - For storing all nodes</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Common Tree Problems</h2>
+
+                <h3>Find Height of Tree</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def height(node):
+    """
+    Find height of binary tree.
+    Time Complexity: O(n)
+    """
+    if not node:
+        return 0
+    
+    return 1 + max(height(node.left), height(node.right))</code></pre>
+                </div>
+
+                <h3>Check if Tree is Balanced</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def is_balanced(node):
+    """
+    Check if binary tree is balanced.
+    Time Complexity: O(n)
+    """
+    if not node:
+        return True
+    
+    left_height = height(node.left)
+    right_height = height(node.right)
+    
+    if abs(left_height - right_height) > 1:
+        return False
+    
+    return is_balanced(node.left) and is_balanced(node.right)</code></pre>
+                </div>
+
+                <h3>Lowest Common Ancestor (LCA)</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def lca(root, p, q):
+    """
+    Find lowest common ancestor of two nodes in BST.
+    Time Complexity: O(log n)
+    """
+    if not root:
+        return None
+    
+    if p.val < root.val and q.val < root.val:
+        return lca(root.left, p, q)
+    elif p.val > root.val and q.val > root.val:
+        return lca(root.right, p, q)
+    else:
+        return root</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Applications</h2>
+                <ul>
+                    <li>Database indexing (B-trees)</li>
+                    <li>File system hierarchies</li>
+                    <li>Expression trees for parsing</li>
+                    <li>Huffman coding</li>
+                    <li>Auto-complete and spell checking (Trie)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="graphs.html">Graphs</a> - Generalized tree structure</li>
+                    <li><a href="queues.html">Queues</a> - Used in level-order traversal</li>
+                    <li><a href="../algorithms/recursion.html">Recursion</a> - Common in tree algorithms</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

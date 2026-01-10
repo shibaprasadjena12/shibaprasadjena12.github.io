@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Lists - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>📚 DSA with Python</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="arrays.html">Arrays</a>
+                        <a href="linked-lists.html" class="active">Linked Lists</a>
+                        <a href="stacks.html">Stacks</a>
+                        <a href="queues.html">Queues</a>
+                        <a href="trees.html">Trees</a>
+                        <a href="graphs.html">Graphs</a>
+                        <a href="heaps.html">Heaps</a>
+                        <a href="hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="../algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="../algorithms/searching.html">Searching Algorithms</a>
+                        <a href="../algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="../algorithms/recursion.html">Recursion</a>
+                        <a href="../algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="../algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb">
+                <a href="../../index.html">Home</a> / Data Structures / Linked Lists
+            </div>
+
+            <div class="page-header">
+                <h1>Linked Lists</h1>
+                <p>Linear data structure with nodes connected through pointers</p>
+            </div>
+
+            <div class="section">
+                <h2>What is a Linked List?</h2>
+                <p>A linked list is a linear data structure where elements (nodes) are connected using pointers or references. Unlike arrays, linked lists don't require contiguous memory locations, making them flexible for dynamic memory allocation.</p>
+                <p>Each node contains data and a reference to the next node. The first node is called the <strong>head</strong> and the last node points to <strong>None</strong>.</p>
+            </div>
+
+            <div class="section">
+                <h2>Types of Linked Lists</h2>
+                <ul>
+                    <li><strong>Singly Linked List:</strong> Each node points to the next node only</li>
+                    <li><strong>Doubly Linked List:</strong> Each node points to both next and previous nodes</li>
+                    <li><strong>Circular Linked List:</strong> Last node points back to the first node</li>
+                    <li><strong>Circular Doubly Linked List:</strong> Combination of doubly and circular</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Singly Linked List Implementation</h2>
+
+                <h3>Node Class</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class Node:
+    """Node class for singly linked list"""
+    def __init__(self, data):
+        self.data = data
+        self.next = None</code></pre>
+                </div>
+
+                <h3>Linked List Class</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+    
+    # Insert at beginning - O(1)
+    def insert_at_beginning(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+    
+    # Insert at end - O(n)
+    def insert_at_end(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+    
+    # Insert at specific position - O(n)
+    def insert_at_position(self, data, position):
+        if position == 0:
+            self.insert_at_beginning(data)
+            return
+        
+        new_node = Node(data)
+        current = self.head
+        
+        for _ in range(position - 1):
+            if current is None:
+                return
+            current = current.next
+        
+        if current is None:
+            return
+        
+        new_node.next = current.next
+        current.next = new_node
+    
+    # Delete first node - O(1)
+    def delete_first(self):
+        if self.head:
+            self.head = self.head.next
+    
+    # Delete node with specific data - O(n)
+    def delete_by_value(self, data):
+        if not self.head:
+            return
+        
+        if self.head.data == data:
+            self.head = self.head.next
+            return
+        
+        current = self.head
+        while current.next:
+            if current.next.data == data:
+                current.next = current.next.next
+                return
+            current = current.next
+    
+    # Search for element - O(n)
+    def search(self, data):
+        current = self.head
+        while current:
+            if current.data == data:
+                return True
+            current = current.next
+        return False
+    
+    # Display linked list
+    def display(self):
+        elements = []
+        current = self.head
+        while current:
+            elements.append(str(current.data))
+            current = current.next
+        print(" -> ".join(elements) + " -> None")
+    
+    # Get length - O(n)
+    def length(self):
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
+    
+    # Reverse linked list - O(n)
+    def reverse(self):
+        prev = None
+        current = self.head
+        
+        while current:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+        
+        self.head = prev</code></pre>
+                </div>
+
+                <h3>Usage Example</h3>
+                <div class="code-block">
+                    <pre><code class="language-python"># Create linked list
+ll = SinglyLinkedList()
+
+# Insert elements
+ll.insert_at_end(10)
+ll.insert_at_end(20)
+ll.insert_at_end(30)
+ll.insert_at_beginning(5)
+
+# Display
+ll.display()  # Output: 5 -> 10 -> 20 -> 30 -> None
+
+# Search
+print(ll.search(20))  # Output: True
+
+# Delete
+ll.delete_by_value(20)
+ll.display()  # Output: 5 -> 10 -> 30 -> None
+
+# Reverse
+ll.reverse()
+ll.display()  # Output: 30 -> 10 -> 5 -> None</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Doubly Linked List</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">class DNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def insert_at_beginning(self, data):
+        new_node = DNode(data)
+        if not self.head:
+            self.head = new_node
+            return
+        
+        new_node.next = self.head
+        self.head.prev = new_node
+        self.head = new_node
+    
+    def insert_at_end(self, data):
+        new_node = DNode(data)
+        if not self.head:
+            self.head = new_node
+            return
+        
+        current = self.head
+        while current.next:
+            current = current.next
+        
+        current.next = new_node
+        new_node.prev = current
+    
+    def display_forward(self):
+        elements = []
+        current = self.head
+        while current:
+            elements.append(str(current.data))
+            current = current.next
+        print("Forward: " + " <-> ".join(elements))</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Complexity Analysis</h2>
+                <div class="complexity-box">
+                    <h4>Time Complexity (Singly Linked List):</h4>
+                    <p><strong>Access:</strong> O(n) - Must traverse from head</p>
+                    <p><strong>Search:</strong> O(n) - Linear search</p>
+                    <p><strong>Insertion at beginning:</strong> O(1) - Direct operation</p>
+                    <p><strong>Insertion at end:</strong> O(n) - Must traverse to end</p>
+                    <p><strong>Deletion at beginning:</strong> O(1) - Direct operation</p>
+                    <p><strong>Deletion (general):</strong> O(n) - Must traverse</p>
+                </div>
+                <div class="complexity-box">
+                    <h4>Space Complexity:</h4>
+                    <p><strong>O(n)</strong> - Where n is the number of nodes</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Advantages and Disadvantages</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Advantages</h4>
+                        <ul>
+                            <li>Dynamic memory allocation</li>
+                            <li>Efficient insertion/deletion</li>
+                            <li>No memory wastage</li>
+                            <li>Can be used for stacks/queues</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Disadvantages</h4>
+                        <ul>
+                            <li>Slow random access O(n)</li>
+                            <li>Extra memory for pointers</li>
+                            <li>Not cache friendly</li>
+                            <li>Complex to implement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Common Problems</h2>
+                
+                <h3>Find Middle Node</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def find_middle(head):
+    """
+    Find middle node using slow and fast pointers.
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow</code></pre>
+                </div>
+
+                <h3>Detect Cycle</h3>
+                <div class="code-block">
+                    <pre><code class="language-python">def has_cycle(head):
+    """
+    Detect if linked list has cycle (Floyd's algorithm).
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>When to Use Linked Lists</h2>
+                <ul>
+                    <li>When frequent insertions/deletions are needed</li>
+                    <li>When size is unknown and varies</li>
+                    <li>For implementing stacks and queues</li>
+                    <li>For graph adjacency lists</li>
+                    <li>When memory is fragmented</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="arrays.html">Arrays</a> - Alternative sequential structure</li>
+                    <li><a href="stacks.html">Stacks</a> - Often implemented using linked lists</li>
+                    <li><a href="queues.html">Queues</a> - Often implemented using linked lists</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

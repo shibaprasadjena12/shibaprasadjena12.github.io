@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithms - DSA with Python</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="../data-structures/arrays.html">Arrays</a>
+                        <a href="../data-structures/linked-lists.html">Linked Lists</a>
+                        <a href="../data-structures/stacks.html">Stacks</a>
+                        <a href="../data-structures/queues.html">Queues</a>
+                        <a href="../data-structures/trees.html">Trees</a>
+                        <a href="../data-structures/graphs.html">Graphs</a>
+                        <a href="../data-structures/heaps.html">Heaps</a>
+                        <a href="../data-structures/hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="sorting.html" class="active">Sorting Algorithms</a>
+                        <a href="searching.html">Searching Algorithms</a>
+                        <a href="dynamic-programming.html">Dynamic Programming</a>
+                        <a href="recursion.html">Recursion</a>
+                        <a href="graph-algorithms.html">Graph Algorithms</a>
+                        <a href="greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="../complexity-analysis.html">Complexity Analysis</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../../index.html">Home</a> / Algorithms / Sorting</div>
+            <div class="page-header">
+                <h1>Sorting Algorithms</h1>
+                <p>Algorithms to arrange elements in a specific order</p>
+            </div>
+
+            <div class="section">
+                <h2>Overview</h2>
+                <p>Sorting algorithms are fundamental in computer science. They arrange elements in a specific order (ascending or descending). The choice of algorithm depends on data size, distribution, and memory constraints.</p>
+            </div>
+
+            <div class="section">
+                <h2>1. Bubble Sort</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">def bubble_sort(arr):
+    """
+    Bubble Sort: Compare adjacent elements and swap.
+    Time: O(n²) | Space: O(1)
+    """
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+
+# Test
+print(bubble_sort([64, 34, 25, 12, 22, 11, 90]))
+# Output: [11, 12, 22, 25, 34, 64, 90]</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>2. Selection Sort</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">def selection_sort(arr):
+    """
+    Selection Sort: Find min and place at beginning.
+    Time: O(n²) | Space: O(1)
+    """
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>3. Insertion Sort</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">def insertion_sort(arr):
+    """
+    Insertion Sort: Insert each element in sorted position.
+    Time: O(n²) worst, O(n) best | Space: O(1)
+    """
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        
+        arr[j + 1] = key
+    return arr</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>4. Merge Sort</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">def merge_sort(arr):
+    """
+    Merge Sort: Divide and conquer approach.
+    Time: O(n log n) | Space: O(n)
+    """
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>5. Quick Sort</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">def quick_sort(arr):
+    """
+    Quick Sort: Partition and sort approach.
+    Time: O(n log n) average, O(n²) worst | Space: O(log n)
+    """
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quick_sort(left) + middle + quick_sort(right)
+
+# In-place version
+def quick_sort_inplace(arr, low=0, high=None):
+    if high is None:
+        high = len(arr) - 1
+    
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort_inplace(arr, low, pi - 1)
+        quick_sort_inplace(arr, pi + 1, high)
+    
+    return arr
+
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    
+    for j in range(low, high):
+        if arr[j] < pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>6. Heap Sort</h2>
+                <div class="code-block">
+                    <pre><code class="language-python">def heap_sort(arr):
+    """
+    Heap Sort: Build heap and extract min repeatedly.
+    Time: O(n log n) | Space: O(1)
+    """
+    n = len(arr)
+    
+    # Build max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    
+    # Extract elements from heap
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+    
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+    
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Comparison Table</h2>
+                <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <tr style="background-color: #f3f4f6;">
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb; text-align: left;"><strong>Algorithm</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb; text-align: left;"><strong>Best Time</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb; text-align: left;"><strong>Average Time</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb; text-align: left;"><strong>Worst Time</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb; text-align: left;"><strong>Space</strong></th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Bubble Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(1)</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Selection Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(1)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Insertion Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(1)</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Merge Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Quick Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(log n)</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Heap Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(1)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>When to Use Each Algorithm</h2>
+                <ul>
+                    <li><strong>Small arrays:</strong> Insertion Sort or Bubble Sort</li>
+                    <li><strong>Large arrays:</strong> Merge Sort or Quick Sort</li>
+                    <li><strong>Nearly sorted:</strong> Insertion Sort or Bubble Sort</li>
+                    <li><strong>Limited memory:</strong> Heap Sort</li>
+                    <li><strong>Python built-in:</strong> Use sorted() or list.sort()</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Related Topics</h2>
+                <ul>
+                    <li><a href="searching.html">Searching Algorithms</a> - Works with sorted data</li>
+                    <li><a href="../complexity-analysis.html">Complexity Analysis</a> - Understand performance</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complexity Analysis - DSA with Python</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h1>📚 DSA with Python</h1></div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Data Structures</a>
+                    <div class="dropdown-content">
+                        <a href="data-structures/arrays.html">Arrays</a>
+                        <a href="data-structures/linked-lists.html">Linked Lists</a>
+                        <a href="data-structures/stacks.html">Stacks</a>
+                        <a href="data-structures/queues.html">Queues</a>
+                        <a href="data-structures/trees.html">Trees</a>
+                        <a href="data-structures/graphs.html">Graphs</a>
+                        <a href="data-structures/heaps.html">Heaps</a>
+                        <a href="data-structures/hash-tables.html">Hash Tables</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Algorithms</a>
+                    <div class="dropdown-content">
+                        <a href="algorithms/sorting.html">Sorting Algorithms</a>
+                        <a href="algorithms/searching.html">Searching Algorithms</a>
+                        <a href="algorithms/dynamic-programming.html">Dynamic Programming</a>
+                        <a href="algorithms/recursion.html">Recursion</a>
+                        <a href="algorithms/graph-algorithms.html">Graph Algorithms</a>
+                        <a href="algorithms/greedy.html">Greedy Algorithms</a>
+                    </div>
+                </li>
+                <li><a href="complexity-analysis.html" class="active">Complexity Analysis</a></li>
+                <li><a href="resources.html">Resources</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="page-container">
+            <div class="breadcrumb"><a href="../index.html">Home</a> / Complexity Analysis</div>
+            <div class="page-header">
+                <h1>Complexity Analysis</h1>
+                <p>Understanding Time and Space Complexity of Algorithms</p>
+            </div>
+
+            <div class="section">
+                <h2>What is Complexity Analysis?</h2>
+                <p>Complexity analysis measures how an algorithm's performance changes as input size grows. It helps us choose the right algorithm for a problem and predict performance at scale.</p>
+            </div>
+
+            <div class="section">
+                <h2>Big-O Notation</h2>
+                <p>Big-O describes the worst-case scenario - the maximum time or space an algorithm might use.</p>
+
+                <h3>Common Time Complexities (from fastest to slowest)</h3>
+                <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <tr style="background-color: #f3f4f6;">
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>Notation</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>Name</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>Example</strong></th>
+                        <th style="padding: 1rem; border: 1px solid #e5e7eb;"><strong>n=1000</strong></th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(1)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Constant</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Array access</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">1</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Logarithmic</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Binary Search</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">~10</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Linear</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Linear Search</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">1000</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n log n)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Linearithmic</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Merge Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">~10,000</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n²)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Quadratic</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Bubble Sort</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">1,000,000</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n³)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Cubic</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Matrix multiplication</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">1,000,000,000</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(2ⁿ)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Exponential</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Subset generation</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">2^1000</td>
+                    </tr>
+                    <tr style="background-color: #f9fafb;">
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">O(n!)</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Factorial</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">Permutations</td>
+                        <td style="padding: 1rem; border: 1px solid #e5e7eb;">1000!</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Time Complexity Rules</h2>
+                <div class="code-block">
+                    <pre><code class="language-python"># Drop Constants
+# O(2n) → O(n)
+def example1(n):
+    for i in range(2*n):  # 2n operations
+        print(i)
+
+# Drop Lower Order Terms
+# O(n² + n) → O(n²)
+def example2(n):
+    for i in range(n):      # n² operations
+        for j in range(n):
+            print(i, j)
+    for i in range(n):      # n operations
+        print(i)
+
+# Multiple Inputs
+# O(m*n)
+def example3(m, n):
+    for i in range(m):
+        for j in range(n):
+            print(i, j)
+
+# Add Complexities (Sequential)
+# O(n + m)
+def example4(n, m):
+    for i in range(n):      # O(n)
+        print(i)
+    for i in range(m):      # O(m)
+        print(i)</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Space Complexity</h2>
+                <p>Space complexity measures the amount of extra memory an algorithm uses.</p>
+                <ul>
+                    <li><strong>O(1):</strong> Constant space (in-place algorithms)</li>
+                    <li><strong>O(n):</strong> Linear space (arrays, lists)</li>
+                    <li><strong>O(log n):</strong> Logarithmic space (recursion depth)</li>
+                    <li><strong>O(n²):</strong> Quadratic space (2D arrays)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Big-O vs Other Notations</h2>
+                <ul>
+                    <li><strong>Big-O (O):</strong> Upper bound - worst case</li>
+                    <li><strong>Big-Omega (Ω):</strong> Lower bound - best case</li>
+                    <li><strong>Big-Theta (Θ):</strong> Tight bound - average case</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Practical Tips</h2>
+                <ul>
+                    <li>Nested loops multiply complexities: O(n) * O(n) = O(n²)</li>
+                    <li>Sequential loops add complexities: O(n) + O(m) = O(n + m)</li>
+                    <li>Always consider best, average, and worst cases</li>
+                    <li>Space includes both input and auxiliary space</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 DSA with Python. Designed for students learning Data Structures and Algorithms.</p>
+            <p>Created with ❤️ for the programming community</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
